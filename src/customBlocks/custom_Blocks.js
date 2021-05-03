@@ -1,5 +1,5 @@
 import Blockly from 'blockly';
-import 'blockly/python';
+import 'blockly/javascript';
 
 Blockly.Blocks['new_boundary_function'] = {
     init: function () {
@@ -14,9 +14,9 @@ Blockly.Blocks['new_boundary_function'] = {
     }
 };
 
-Blockly.Python['new_boundary_function'] = function (block) {
+Blockly.JavaScript['new_boundary_function'] = function (block) {
     var text_name = block.getFieldValue('Name');
-    var statements_content = Blockly.Python.statementToCode(block, 'Content');
+    var statements_content = Blockly.JavaScript.statementToCode(block, 'Content');
     // TODO: Assemble Python into code variable.
     var code = 'def ' + text_name + '(_object,**kwargs):\n' + statements_content + '\n';
     return code;
@@ -35,8 +35,8 @@ Blockly.Blocks['return'] = {
     }
 };
 
-Blockly.Python['return'] = function (block) {
-    var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+Blockly.JavaScript['return'] = function (block) {
+    var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.Javascript.ORDER_ATOMIC);
     // TODO: Assemble Python into code variable.
     var code = 'return ' + value_name + '\n';
     return code;
