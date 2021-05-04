@@ -4,7 +4,7 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 
 Blockly.Blocks['new_boundary_function'] = {
   init: function () {
@@ -53,3 +53,8 @@ Blockly.JavaScript['return'] = function (block) {
   const code = 'return ' + value_name + '\n';
   return code;
 };
+
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+export default initBlocks;

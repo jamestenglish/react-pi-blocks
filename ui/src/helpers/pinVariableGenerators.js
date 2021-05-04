@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable arrow-body-style */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 
 import isNullOrEmpty from './isNullOrEmpty';
 
@@ -126,4 +126,12 @@ const createGenerators = ({ inputType, color = 230 }) => {
     commandCodeGenerator,
   };
 };
+
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+initBlocks();
+
+export { initBlocks };
+
 export default createGenerators;

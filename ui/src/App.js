@@ -1,9 +1,4 @@
 import './App.css';
-import './customBlocks/custom_Blocks';
-import './customBlocks/required/board_setup_blocks';
-import './customBlocks/led/led';
-import './customBlocks/button/button';
-import './customBlocks/pins/pins';
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,7 +10,19 @@ import BlocklyToolbox from './BlocklyToolbox';
 import Terminal from './Terminal';
 import ProjectManager from './ProjectManager';
 
+import initBlocks from './customBlocks/custom_Blocks';
+import initBlocksA from './customBlocks/required/board_setup_blocks';
+import initBlocksB from './customBlocks/led/led';
+import initBlocksC from './customBlocks/button/button';
+import initBlocksD from './customBlocks/pins/pins';
+
 import { SocketContext, socket } from './socket';
+
+initBlocks();
+initBlocksA();
+initBlocksB();
+initBlocksC();
+initBlocksD();
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +57,7 @@ TabPanel.propTypes = {
 };
 
 const initialXml =
-  '<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable type="LED" id="g^2Gj.3/H$,ISAy|HB1{">led1</variable></variables><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"><statement name="MAIN"><block type="set_led" id="R)dz)nVwl5Mn.kA1[P8i"><value name="PIN"><block type="pin_5" id="P53XXFoi{@oEOht9j;#x"></block></value><value name="LED"><block type="get_led" id="-X%8-~Q:fdUJshdq-nG="><field name="LED" id="g^2Gj.3/H$,ISAy|HB1{" variabletype="LED">led1</field></block></value></block></statement></block></xml>';
+  '<xml xmlns="https://developers.google.com/blockly/xml"><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"></block></xml>';
 
 const App = () => {
   console.group('App');

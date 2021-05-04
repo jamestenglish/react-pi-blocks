@@ -3,7 +3,7 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 
 import createGenerators from '../../helpers/pinVariableGenerators';
 import isNullOrEmpty from '../../helpers/isNullOrEmpty';
@@ -158,3 +158,8 @@ Blockly.JavaScript['led_on_off'] = function (block) {
   }
   return commandCodeGenerator()(block);
 };
+
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+export default initBlocks;

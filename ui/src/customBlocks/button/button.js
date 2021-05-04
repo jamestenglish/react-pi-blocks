@@ -4,7 +4,7 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 import createGenerators from '../../helpers/pinVariableGenerators';
 
 const {
@@ -104,3 +104,7 @@ Blockly.JavaScript['button_on_off'] = function (block) {
 
   return code;
 };
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+export default initBlocks;

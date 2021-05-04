@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 
 Blockly.Blocks['board_setup'] = {
   init: function () {
@@ -22,3 +22,7 @@ Blockly.JavaScript['board_setup'] = function (block) {
   `;
   return code;
 };
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+export default initBlocks;

@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 /* eslint-disable func-names, object-shorthand */
 import Blockly from 'blockly';
-import 'blockly/javascript';
+import jsBlockly from 'blockly/javascript';
 
 import gpioOptions from '../constants/gpioOptions';
 
@@ -41,3 +41,8 @@ Blockly.JavaScript['pin_a'] = function () {
   const code = `'pin_a'`;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+
+const initBlocks = () => {
+  console.log({ Blockly, jsBlockly });
+};
+export default initBlocks;
