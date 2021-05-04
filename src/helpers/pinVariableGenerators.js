@@ -7,7 +7,8 @@ const createGenerators = ({ inputType }) => {
   const pinVariableBlockSetGenerator = ({ useText }) => {
     return function () {
       this.appendDummyInput().appendField("Make Pin");
-      this.appendValueInput("PIN").setCheck("PIN").appendField(useText);
+      this.appendValueInput("PIN").setCheck("PIN");
+      this.appendDummyInput().appendField(useText);
       this.appendValueInput(inputType).setCheck(inputType);
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
