@@ -4,7 +4,6 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-// import jsBlockly from 'blockly/javascript';
 import 'blockly/javascript';
 
 import createGenerators from '../../helpers/pinVariableGenerators';
@@ -16,7 +15,6 @@ const {
   pinVariableCodeGetGenerator,
 } = createGenerators({ inputType: 'BUTTON', color: '#749DC4' });
 
-// const init = () => {
 Blockly.Blocks['set_button'] = {
   init: pinVariableBlockSetGenerator({
     useText: 'be used for LED named',
@@ -107,10 +105,3 @@ Blockly.JavaScript['button_on_off'] = function (block) {
 
   return code;
 };
-// };
-
-// const initBlocks = () => {
-//   init();
-//   console.log({ Blockly, jsBlockly });
-// };
-// export default initBlocks;

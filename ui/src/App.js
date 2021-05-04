@@ -5,16 +5,7 @@ import './customBlocks/required/board_setup_blocks';
 import './customBlocks/led/led';
 import './customBlocks/button/button';
 import './customBlocks/pins/pins';
-// import initBlocks from './customBlocks/custom_Blocks';
-// import initBlocksA from './customBlocks/required/board_setup_blocks';
-// import initBlocksB from './customBlocks/led/led';
-// import initBlocksC from './customBlocks/button/button';
-// import initBlocksD from './customBlocks/pins/pins';
-// initBlocks();
-// initBlocksA();
-// initBlocksB();
-// initBlocksC();
-// initBlocksD();
+
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -39,17 +30,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {/* {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )} */}
       {children}
-      {/* {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )} */}
     </div>
   );
 }
@@ -78,7 +59,6 @@ const App = () => {
 
   const handleProjectNameSelection = useCallback((projectNameToUpdate) => {
     setProjectName(projectNameToUpdate);
-    setTabValue(1);
   }, []);
 
   const handleToolboxChange = useCallback(
@@ -114,6 +94,7 @@ const App = () => {
         console.log({ buf });
         setToolboxState({ code: '', xml: buf });
       }
+      setTabValue(1);
       console.groupEnd();
     });
   }, []);

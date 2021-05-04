@@ -11,9 +11,12 @@ const spawn = require("child_process").spawn;
 
 const { handleFiles } = require("./handleFiles");
 
+console.log("1");
 app.use(express.static("./build"));
+console.log("2");
 
 const sh = spawn("bash");
+console.log("3");
 
 sh.stdout.on("data", function (data) {
   console.log({ stdout: data });

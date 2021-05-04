@@ -2,10 +2,8 @@
 /* eslint-disable func-names */
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
-// import jsBlockly from 'blockly/javascript';
 import 'blockly/javascript';
 
-// const init = () => {
 Blockly.Blocks['board_setup'] = {
   init: function () {
     this.appendDummyInput().appendField('Start');
@@ -24,9 +22,3 @@ Blockly.JavaScript['board_setup'] = function (block) {
   `;
   return code;
 };
-// };
-// const initBlocks = () => {
-//   init();
-//   console.log({ Blockly, jsBlockly });
-// };
-// export default initBlocks;

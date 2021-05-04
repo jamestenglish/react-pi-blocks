@@ -119,7 +119,7 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
             <Button
               variant="contained"
               color="primary"
-              disabled={inputValue.trim().length === 0}
+              disabled={inputValue.trim().length === 0 || fileList === null}
               onClick={() => {
                 const projectName = `${inputValue.trim()}.xml`;
                 handleProjectNameSelection(projectName);

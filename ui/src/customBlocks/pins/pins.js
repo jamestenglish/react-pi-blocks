@@ -1,12 +1,10 @@
 /* eslint-disable dot-notation */
 /* eslint-disable func-names, object-shorthand */
 import Blockly from 'blockly';
-// import jsBlockly from 'blockly/javascript';
 import 'blockly/javascript';
 
 import gpioOptions from '../constants/gpioOptions';
 
-// const init = () => {
 gpioOptions.forEach((option) => {
   const [name, value] = option;
   // console.log({ name });
@@ -43,10 +41,3 @@ Blockly.JavaScript['pin_a'] = function () {
   const code = `'pin_a'`;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
-// };
-
-// const initBlocks = () => {
-//   init();
-//   console.log({ Blockly, jsBlockly });
-// };
-// export default initBlocks;
