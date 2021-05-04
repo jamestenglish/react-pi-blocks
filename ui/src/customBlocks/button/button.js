@@ -1,56 +1,56 @@
-import Blockly from "blockly";
-import "blockly/javascript";
-import createGenerators from "../../helpers/pinVariableGenerators";
+import Blockly from 'blockly';
+import 'blockly/javascript';
+import createGenerators from '../../helpers/pinVariableGenerators';
 
 const {
   pinVariableBlockSetGenerator,
   pinVariableCodeSetGenerator,
   pinVariableBlockGetGenerator,
   pinVariableCodeGetGenerator,
-} = createGenerators({ inputType: "BUTTON", color: "#749DC4" });
+} = createGenerators({ inputType: 'BUTTON', color: '#749DC4' });
 
-Blockly.Blocks["set_button"] = {
+Blockly.Blocks['set_button'] = {
   init: pinVariableBlockSetGenerator({
-    useText: "be used for LED named",
+    useText: 'be used for LED named',
   }),
 };
 
-Blockly.JavaScript["set_button"] = pinVariableCodeSetGenerator({
-  constructorName: "five.Button",
+Blockly.JavaScript['set_button'] = pinVariableCodeSetGenerator({
+  constructorName: 'five.Button',
 });
 
-Blockly.Blocks["get_button"] = {
+Blockly.Blocks['get_button'] = {
   init: pinVariableBlockGetGenerator({
-    useText: "Button Name",
+    useText: 'Button Name',
   }),
 };
 
-Blockly.JavaScript["get_button"] = pinVariableCodeGetGenerator();
+Blockly.JavaScript['get_button'] = pinVariableCodeGetGenerator();
 
-Blockly.Blocks["button_on_off"] = {
+Blockly.Blocks['button_on_off'] = {
   init: function () {
-    this.appendValueInput("BUTTON").setCheck("BUTTON").appendField("When");
+    this.appendValueInput('BUTTON').setCheck('BUTTON').appendField('When');
     this.appendDummyInput()
-      .appendField("is")
+      .appendField('is')
       .appendField(
         new Blockly.FieldDropdown(
           [
-            ["Down", "down"],
-            ["Up", "up"],
-            ["Hold", "hold"],
+            ['Down', 'down'],
+            ['Up', 'up'],
+            ['Hold', 'hold'],
           ]
           // this.validate
         ),
-        "BUTTON_COMMAND"
+        'BUTTON_COMMAND'
       );
-    this.appendStatementInput("BUTTON_STMT").setCheck(null);
+    this.appendStatementInput('BUTTON_STMT').setCheck(null);
 
-    this.setColour("#6549DA");
+    this.setColour('#6549DA');
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("");
-    this.setHelpUrl("");
+    this.setTooltip('');
+    this.setHelpUrl('');
   },
   // mutationToDom: function () {
   //   var container = document.createElement("mutation");
@@ -84,12 +84,12 @@ Blockly.Blocks["button_on_off"] = {
   // },
 };
 
-Blockly.JavaScript["button_on_off"] = function (block) {
-  const buttonCommand = block.getFieldValue("BUTTON_COMMAND");
+Blockly.JavaScript['button_on_off'] = function (block) {
+  const buttonCommand = block.getFieldValue('BUTTON_COMMAND');
 
   const statementsMain = Blockly.JavaScript.statementToCode(
     block,
-    "BUTTON_STMT"
+    'BUTTON_STMT'
   );
   const code = `
   button.on("${buttonCommand}", () => {

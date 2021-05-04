@@ -1,96 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
-import ReactBlockly from "react-blockly";
-import Blockly from "blockly";
+import ReactBlockly from 'react-blockly';
+import Blockly from 'blockly';
 
-import prettier from "prettier/standalone";
-import parserBabel from "prettier/parser-babel";
+import prettier from 'prettier/standalone';
+import parserBabel from 'prettier/parser-babel';
 
-// import pinLimiter from "./helpers/pinLimiter";
-import toolboxCategories from "./toolbox/toolboxCategories";
+import toolboxCategories from './toolbox/toolboxCategories';
 
-// const initialXml =
-//   '<xml xmlns="https://developers.google.com/blockly/xml"><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"></block></xml>';
-
-// const changeListener = (event) => {
-//   pinLimiter(event, currWorkspace);
-// };
-
-// const workspaceDidChange = (workspace) => {
-//   currWorkspace = workspace;
-//   if (!initialized && workspace) {
-//     workspace.addChangeListener(changeListener);
-//     initialized = true;
-//     console.log("INITIALIZED");
-//     console.log("---");
-//   }
-//   const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
-//   document.getElementById("generated-xml").innerText = newXml;
-
-//   const code = Blockly.JavaScript.workspaceToCode(workspace);
-//   const rearrangedCode = `
-//   const { RaspiIO } = require('raspi-io');
-//   const five = require("johnny-five");
-//   const board = new five.Board({
-//     io: new RaspiIO()
-//   });
-
-//   ${code}`;
-
-//   let prettierCode = rearrangedCode;
-//   try {
-//     prettierCode = prettier.format(rearrangedCode, {
-//       parser: "babel",
-//       plugins: [parserBabel],
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   document.getElementById("code").value = prettierCode;
-// };
-
-// const createWorkspaceDidChange = (setToolboxValue) => (workspace) => {
-//   const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
-//   document.getElementById("generated-xml").innerText = newXml;
-
-//   const code = Blockly.JavaScript.workspaceToCode(workspace);
-//   const rearrangedCode = `
-//   const { RaspiIO } = require('raspi-io');
-//   const five = require("johnny-five");
-//   const board = new five.Board({
-//     io: new RaspiIO()
-//   });
-
-//   ${code}`;
-
-//   let prettierCode = rearrangedCode;
-//   try {
-//     prettierCode = prettier.format(rearrangedCode, {
-//       parser: "babel",
-//       plugins: [parserBabel],
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   document.getElementById("code").value = prettierCode;
-// };
+const onImportXmlError = (e) => {
+  console.group('xml error');
+  console.error(e);
+  console.groupEnd();
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
     },
   },
 }));
 
 const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
-  console.log("render");
+  console.group('BlocklyToolbox');
   const { xml } = toolboxState;
   console.log({ xml });
-  // const workspaceDidChange = createWorkspaceDidChange(setToolboxValue);
 
   let initialized = false;
   let currWorkspace;
@@ -103,13 +41,12 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
   function workspaceDidChange(workspace) {
     currWorkspace = workspace;
     if (!initialized && workspace) {
-      // workspace.addChangeListener(changeListener);
       initialized = true;
-      console.log("INITIALIZED");
-      console.log("---");
+      console.group('initialization');
+      console.log('Initializing Workspace');
+      console.groupEnd();
     }
     const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
-    // document.getElementById("generated-xml").innerText = newXml;
     const code = Blockly.JavaScript.workspaceToCode(workspace);
     const rearrangedCode = `
   const { RaspiIO } = require('raspi-io');
@@ -123,19 +60,24 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
     let prettierCode = rearrangedCode;
     try {
       prettierCode = prettier.format(rearrangedCode, {
-        parser: "babel",
+        parser: 'babel',
         plugins: [parserBabel],
       });
     } catch (err) {
-      console.log(err);
+      console.group('Prettier Error');
+      console.error(err);
+      console.groupEnd();
     }
     if (xml !== newXml) {
-      console.log("setting state");
+      console.group('xml changed');
+      console.log('setting state');
+      console.groupEnd();
       handleToolboxChange({ code: prettierCode, xml: newXml });
     }
   }
 
   const classes = useStyles();
+  console.groupEnd();
   return (
     <>
       <div className={classes.root}>
@@ -143,7 +85,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => createVariable("LED")}
+          onClick={() => createVariable('LED')}
         >
           Create LED
         </Button>
@@ -151,7 +93,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => createVariable("BUTTON")}
+          onClick={() => createVariable('BUTTON')}
         >
           Create Button
         </Button>
@@ -164,19 +106,22 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           grid: {
             spacing: 20,
             length: 3,
-            colour: "#ccc",
+            colour: '#ccc',
             snap: true,
           },
         }}
         workspaceDidChange={workspaceDidChange}
-        onImportXmlError={(e) => console.log({ e })}
+        onImportXmlError={onImportXmlError}
       />
     </>
   );
 };
 
 BlocklyToolbox.propTypes = {
-  toolboxState: PropTypes.any.isRequired,
-  setToolboxState: PropTypes.any.isRequired,
+  toolboxState: PropTypes.shape({
+    xml: PropTypes.string,
+    code: PropTypes.string,
+  }).isRequired,
+  handleToolboxChange: PropTypes.func.isRequired,
 };
 export default BlocklyToolbox;

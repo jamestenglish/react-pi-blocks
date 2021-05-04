@@ -1,21 +1,21 @@
-import Blockly from "blockly";
-import "blockly/javascript";
+import Blockly from 'blockly';
+import 'blockly/javascript';
 
-import isNullOrEmpty from "./isNullOrEmpty";
+import isNullOrEmpty from './isNullOrEmpty';
 
 const createGenerators = ({ inputType, color = 230 }) => {
   const pinVariableBlockSetGenerator = ({ useText }) => {
     return function () {
-      this.appendDummyInput().appendField("Make Pin");
-      this.appendValueInput("PIN").setCheck("PIN");
+      this.appendDummyInput().appendField('Make Pin');
+      this.appendValueInput('PIN').setCheck('PIN');
       this.appendDummyInput().appendField(useText);
       this.appendValueInput(inputType).setCheck(inputType);
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(color);
-      this.setTooltip("");
-      this.setHelpUrl("");
+      this.setTooltip('');
+      this.setHelpUrl('');
     };
   };
 
@@ -23,7 +23,7 @@ const createGenerators = ({ inputType, color = 230 }) => {
     return function (block) {
       const pinValue = Blockly.JavaScript.valueToCode(
         block,
-        "PIN",
+        'PIN',
         Blockly.JavaScript.ORDER_ATOMIC
       );
       const inputTypeValue = Blockly.JavaScript.valueToCode(
@@ -35,9 +35,9 @@ const createGenerators = ({ inputType, color = 230 }) => {
       console.log({ pinValue, inputTypeValue });
 
       if (isNullOrEmpty(pinValue) || isNullOrEmpty(inputTypeValue)) {
-        return "";
+        return '';
       }
-      console.log({ pinFieldValue: block.getFieldValue("PIN") });
+      console.log({ pinFieldValue: block.getFieldValue('PIN') });
       console.log({ ledFieldValue: block.getFieldValue(inputType) });
 
       const variableName = Blockly.JavaScript.variableDB_.getName(
@@ -86,7 +86,7 @@ const createGenerators = ({ inputType, color = 230 }) => {
           validatorFunc = tmpValidatorFunc;
         }
       }
-      this.appendValueInput(inputType).setCheck(inputType).appendField("Make");
+      this.appendValueInput(inputType).setCheck(inputType).appendField('Make');
       this.appendDummyInput().appendField(
         new Blockly.FieldDropdown(dropDownArray, validatorFunc),
         `${inputType}_COMMAND`
@@ -95,8 +95,8 @@ const createGenerators = ({ inputType, color = 230 }) => {
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(color);
-      this.setTooltip("");
-      this.setHelpUrl("");
+      this.setTooltip('');
+      this.setHelpUrl('');
     };
   };
 
@@ -108,7 +108,7 @@ const createGenerators = ({ inputType, color = 230 }) => {
         Blockly.JavaScript.ORDER_ATOMIC
       );
       if (isNullOrEmpty(inputBlock)) {
-        return "";
+        return '';
       }
       const variableName = Blockly.JavaScript.variableDB_.getName(
         inputBlock,

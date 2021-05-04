@@ -1,8 +1,8 @@
-import gpioOptions from "../customBlocks/constants/gpioOptions";
+import gpioOptions from '../customBlocks/constants/gpioOptions';
 
 const pinBlocks = gpioOptions.map((option) => {
   const [name] = option;
-  const blockName = `pin_${name.replaceAll("#", "")}`;
+  const blockName = `pin_${name.replaceAll('#', '')}`;
   return {
     type: blockName,
   };
@@ -10,159 +10,159 @@ const pinBlocks = gpioOptions.map((option) => {
 
 const toolboxCategories = [
   {
-    name: "Variables",
-    custom: "VARIABLE",
-    colour: "#a55b80",
+    name: 'Variables',
+    custom: 'VARIABLE',
+    colour: '#a55b80',
   },
   {
-    name: "Logic",
-    colour: "#5C81A6",
+    name: 'Logic',
+    colour: '#5C81A6',
     blocks: [
-      { type: "controls_if" },
-      { type: "logic_compare" },
-      { type: "logic_operation" },
-      { type: "logic_negate" },
-      { type: "logic_boolean" },
-      { type: "logic_null" },
-      { type: "logic_ternary" },
+      { type: 'controls_if' },
+      { type: 'logic_compare' },
+      { type: 'logic_operation' },
+      { type: 'logic_negate' },
+      { type: 'logic_boolean' },
+      { type: 'logic_null' },
+      { type: 'logic_ternary' },
     ],
   },
   {
-    name: "Math",
-    colour: "#5CA65C",
+    name: 'Math',
+    colour: '#5CA65C',
     blocks: [
-      { type: "math_number" },
+      { type: 'math_number' },
 
-      { type: "math_arithmetic" },
+      { type: 'math_arithmetic' },
 
-      { type: "math_single" },
+      { type: 'math_single' },
 
-      { type: "math_trig" },
+      { type: 'math_trig' },
 
-      { type: "math_constant" },
-      { type: "math_number_property" },
+      { type: 'math_constant' },
+      { type: 'math_number_property' },
 
-      { type: "math_round" },
+      { type: 'math_round' },
 
-      { type: "math_on_list" },
+      { type: 'math_on_list' },
 
-      { type: "math_modulo" },
+      { type: 'math_modulo' },
 
-      { type: "math_constrain" },
+      { type: 'math_constrain' },
 
-      { type: "math_random_int" },
+      { type: 'math_random_int' },
 
-      { type: "math_random_float" },
+      { type: 'math_random_float' },
     ],
   },
 
   {
-    name: "Text",
-    colour: "#5CA65C",
+    name: 'Text',
+    colour: '#5CA65C',
     blocks: [
       {
-        type: "text",
+        type: 'text',
       },
       {
-        type: "text_join",
+        type: 'text_join',
       },
       {
-        type: "text_append",
+        type: 'text_append',
       },
       {
-        type: "text_length",
+        type: 'text_length',
       },
       {
-        type: "text_isEmpty",
+        type: 'text_isEmpty',
       },
       {
-        type: "text_indexOf",
+        type: 'text_indexOf',
       },
       {
-        type: "text_charAt",
+        type: 'text_charAt',
       },
       {
-        type: "text_getSubstring",
+        type: 'text_getSubstring',
       },
       {
-        type: "text_changeCase",
+        type: 'text_changeCase',
       },
       {
-        type: "text_trim",
-      },
-    ],
-  },
-  {
-    name: "Loops",
-    colour: "#5ba55b",
-    blocks: [
-      { type: "controls_repeat_ext" },
-      { type: "controls_whileUntil" },
-      { type: "controls_for" },
-      { type: "controls_forEach" },
-      { type: "controls_flow_statements" },
-    ],
-  },
-  {
-    name: "Required",
-    colour: "#5CA699",
-    blocks: [
-      {
-        type: "board_setup",
+        type: 'text_trim',
       },
     ],
   },
   {
-    name: "Pins",
-    colour: "#9CDEF6",
+    name: 'Loops',
+    colour: '#5ba55b',
+    blocks: [
+      { type: 'controls_repeat_ext' },
+      { type: 'controls_whileUntil' },
+      { type: 'controls_for' },
+      { type: 'controls_forEach' },
+      { type: 'controls_flow_statements' },
+    ],
+  },
+  {
+    name: 'Required',
+    colour: '#5CA699',
+    blocks: [
+      {
+        type: 'board_setup',
+      },
+    ],
+  },
+  {
+    name: 'Pins',
+    colour: '#9CDEF6',
     blocks: pinBlocks,
   },
 
   {
-    name: "LED",
-    colour: "#6CB0F2",
+    name: 'LED',
+    colour: '#6CB0F2',
     blocks: [
       {
-        type: "set_led",
+        type: 'set_led',
       },
       {
-        type: "get_led",
+        type: 'get_led',
       },
       {
-        type: "led_on_off",
+        type: 'led_on_off',
       },
     ],
   },
   {
-    name: "Button",
-    colour: "#6549DA",
+    name: 'Button',
+    colour: '#6549DA',
     blocks: [
       {
-        type: "set_button",
+        type: 'set_button',
       },
       {
-        type: "get_button",
+        type: 'get_button',
       },
       {
-        type: "button_on_off",
+        type: 'button_on_off',
       },
     ],
   },
   {
-    name: "Lists",
-    colour: "#745ba5",
+    name: 'Lists',
+    colour: '#745ba5',
     blocks: [
-      { type: "lists_create_with" },
-      { type: "lists_create_with" },
-      { type: "lists_repeat" },
-      { type: "lists_length" },
-      { type: "lists_isEmpty" },
-      { type: "lists_indexOf" },
-      { type: "lists_getIndex" },
-      { type: "lists_setIndex" },
-      { type: "lists_getSublist" },
-      { type: "lists_split" },
-      { type: "lists_sort" },
+      { type: 'lists_create_with' },
+      { type: 'lists_create_with' },
+      { type: 'lists_repeat' },
+      { type: 'lists_length' },
+      { type: 'lists_isEmpty' },
+      { type: 'lists_indexOf' },
+      { type: 'lists_getIndex' },
+      { type: 'lists_setIndex' },
+      { type: 'lists_getSublist' },
+      { type: 'lists_split' },
+      { type: 'lists_sort' },
     ],
   },
 ];

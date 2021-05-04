@@ -7,15 +7,12 @@ Blockly.Blocks['board_setup'] = {
    * @this Blockly.Block
    */
   init: function () {
-    this.appendDummyInput()
-      .appendField("Start")
-    this.setHelpUrl("");
+    this.appendDummyInput().appendField('Start');
+    this.setHelpUrl('');
     this.setColour(50);
-    this.appendStatementInput("MAIN")
-      .setCheck(null);
-  }
-
-}
+    this.appendStatementInput('MAIN').setCheck(null);
+  },
+};
 
 Blockly.JavaScript['board_setup'] = function (block) {
   var statementsMain = Blockly.JavaScript.statementToCode(block, 'MAIN');
@@ -23,6 +20,6 @@ Blockly.JavaScript['board_setup'] = function (block) {
   board.on("ready", () => {
     ${statementsMain}
   });
-  `
+  `;
   return code;
 };

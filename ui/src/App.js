@@ -1,21 +1,21 @@
-import "./App.css";
-import "./customBlocks/custom_Blocks";
-import "./customBlocks/required/board_setup_blocks";
-import "./customBlocks/led/led";
-import "./customBlocks/button/button";
-import "./customBlocks/pins/pins";
-import React, { useState, useCallback, useEffect } from "react";
-import PropTypes from "prop-types";
+import './App.css';
+import './customBlocks/custom_Blocks';
+import './customBlocks/required/board_setup_blocks';
+import './customBlocks/led/led';
+import './customBlocks/button/button';
+import './customBlocks/pins/pins';
+import React, { useState, useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
-import BlocklyToolbox from "./BlocklyToolbox";
-import Terminal from "./Terminal";
-import ProjectManager from "./ProjectManager";
+import BlocklyToolbox from './BlocklyToolbox';
+import Terminal from './Terminal';
+import ProjectManager from './ProjectManager';
 
-import { SocketContext, socket } from "./socket";
+import { SocketContext, socket } from './socket';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,13 +49,13 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-// const initialXml = '<xml xmlns="https://developers.google.com/blockly/xml"><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"></block></xml>';
-
 const initialXml =
   '<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable type="LED" id="g^2Gj.3/H$,ISAy|HB1{">led1</variable></variables><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"><statement name="MAIN"><block type="set_led" id="R)dz)nVwl5Mn.kA1[P8i"><value name="PIN"><block type="pin_5" id="P53XXFoi{@oEOht9j;#x"></block></value><value name="LED"><block type="get_led" id="-X%8-~Q:fdUJshdq-nG="><field name="LED" id="g^2Gj.3/H$,ISAy|HB1{" variabletype="LED">led1</field></block></value></block></statement></block></xml>';
-export default function App() {
+
+const App = () => {
+  console.group('App');
   const [toolboxState, setToolboxState] = useState({
-    code: "",
+    code: '',
     xml: initialXml,
   });
   const [tabValue, setTabValue] = useState(0);
@@ -74,7 +74,10 @@ export default function App() {
     ({ xml, code }) => {
       setToolboxState({ xml, code });
       if (projectName !== null) {
-        socket.emit("saveFile", { contents: xml, fileName: projectName });
+        console.group('handleToolboxChange');
+        console.log({ xml, projectName });
+        console.groupEnd();
+        socket.emit('saveFile', { contents: xml, fileName: projectName });
       }
     },
     [projectName]
@@ -82,19 +85,22 @@ export default function App() {
 
   useEffect(() => {
     if (projectName !== null) {
-      socket.emit("getFile", { fileName: projectName });
+      console.group('getFile Effect');
+      console.log({ projectName });
+      console.groupEnd();
+      socket.emit('getFile', { fileName: projectName });
     }
   }, [projectName]);
 
   useEffect(() => {
-    socket.on("file", (file) => {
-      if (file === "") {
-        console.log("blank file");
-        setToolboxState({ code: "", xml: initialXml });
+    socket.on('file', (file) => {
+      if (file === '') {
+        console.log('blank file');
+        setToolboxState({ code: '', xml: initialXml });
       } else {
         const buf = String.fromCharCode.apply(null, new Uint8Array(file));
         console.log({ buf });
-        setToolboxState({ code: "", xml: buf });
+        setToolboxState({ code: '', xml: buf });
       }
     });
   }, []);
@@ -130,7 +136,7 @@ export default function App() {
       <TabPanel value={tabValue} index={2}>
         <textarea
           id="code"
-          style={{ height: "200px", width: "800px" }}
+          style={{ height: '200px', width: '800px' }}
           value={toolboxState.code}
         ></textarea>
       </TabPanel>
@@ -142,4 +148,6 @@ export default function App() {
       </TabPanel>
     </SocketContext.Provider>
   );
-}
+};
+
+export default App;

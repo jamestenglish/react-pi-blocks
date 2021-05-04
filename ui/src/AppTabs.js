@@ -1,16 +1,16 @@
-import React, { useState, useCallback, useContext } from "react";
-import PropTypes from "prop-types";
-import { SocketContext } from "./socket";
+import React, { useState, useCallback, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { SocketContext } from './socket';
 
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-import BlocklyToolbox from "./BlocklyToolbox";
-import Terminal from "./Terminal";
-import ProjectManager from "./ProjectManager";
+import BlocklyToolbox from './BlocklyToolbox';
+import Terminal from './Terminal';
+import ProjectManager from './ProjectManager';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -85,7 +85,7 @@ const AppTabs = ({
       <TabPanel value={tabValue} index={2}>
         <textarea
           id="code"
-          style={{ height: "200px", width: "800px" }}
+          style={{ height: '200px', width: '800px' }}
           value={toolboxState.code}
         ></textarea>
       </TabPanel>

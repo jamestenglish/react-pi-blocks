@@ -70,5 +70,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 ```bash
-yarn add -d babel-eslint eslint eslint-config-airbnb eslint-config-prettier eslint-config-react-app eslint-import-resolver-node eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks prettier
+yarn add babel-eslint eslint eslint-config-airbnb eslint-config-prettier eslint-config-react-app eslint-import-resolver-node eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks prettier eslint-plugin-jsx-a11y @testing-library/dom @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-eslint eslint-plugin-flowtype babel-eslint --dev
 ```

@@ -12,19 +12,22 @@ code {
     monospace;
 }
 
-p.terminal, input {
-        font-family: fixed;
-        font-size: 13px;
-        border: none;
-      }
-p.terminal { 
-        white-space: pre; 
-      }
-p.terminal, form.terminal, input.terminal { 
-        margin:0; padding:0; 
-      }
-input:focus.terminal { 
-        outline: none; 
-        border: none; 
-      }
-  
+p.terminal,
+input {
+  font-family: fixed;
+  font-size: 13px;
+  border: none;
+}
+p.terminal {
+  white-space: pre;
+}
+p.terminal,
+form.terminal,
+input.terminal {
+  margin: 0;
+  padding: 0;
+}
+input:focus.terminal {
+  outline: none;
+  border: none;
+}
