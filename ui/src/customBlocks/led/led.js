@@ -28,7 +28,7 @@ const {
   pinVariableCodeGetGenerator,
   commandBlockGenerator,
   commandCodeGenerator,
-} = createGenerators({ inputType: "LED" });
+} = createGenerators({ inputType: "LED", color: "#6CB0F2" });
 
 Blockly.Blocks["set_led"] = {
   init: pinVariableBlockSetGenerator({

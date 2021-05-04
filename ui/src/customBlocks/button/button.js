@@ -7,7 +7,7 @@ const {
   pinVariableCodeSetGenerator,
   pinVariableBlockGetGenerator,
   pinVariableCodeGetGenerator,
-} = createGenerators({ inputType: "BUTTON" });
+} = createGenerators({ inputType: "BUTTON", color: "#749DC4" });
 
 Blockly.Blocks["set_button"] = {
   init: pinVariableBlockSetGenerator({
@@ -45,7 +45,7 @@ Blockly.Blocks["button_on_off"] = {
       );
     this.appendStatementInput("BUTTON_STMT").setCheck(null);
 
-    this.setColour(230);
+    this.setColour("#6549DA");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);

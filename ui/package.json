@@ -1,33 +1,51 @@
 {
-  "name": "reactblockly-customblocks",
+  "name": "react-pi-blocks-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@babel/parser": "^7.12.11",
     "@material-ui/core": "^4.11.4",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "prettier": "^2.2.1",
+    "@material-ui/icons": "^4.11.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-blockly": "^6.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "socket.io-client": "^4.0.1",
     "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-import-resolver-node": "^0.3.4",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:base": "eslint --ignore-path ../.gitignore",
+    "lint": "yarn lint:base .",
+    "lint:check": "yarn lint:base --max-warnings 0 .",
+    "prettier:base": "prettier --ignore-path ../.gitignore",
+    "prettier:check": "yarn prettier:base --check",
+    "prettier:fix": "yarn prettier:base --write"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "../.eslintrc.js"
     ]
   },
+  "prettier": "../.prettierrc.js",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,0 +1,18 @@
+{
+  "name": "react-pi-blocks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jamestenglish/react-pi-blocks.git",
+  "author": "James English",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "ui:install": "cd ui && yarn install",
+    "server:install": "cd server && yarn install",
+    "ui:build": "cd ui && yarn build",
+    "ui:mv": "mv ui/build server/build",
+    "setup": "yarn ui:install && yarn server:install && yarn ui:build && yarn ui:mv",
+    "server:start": "cd server && yarn start",
+    "start": "yarn server:start"
+  }
+}

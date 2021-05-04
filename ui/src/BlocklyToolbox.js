@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,11 +9,11 @@ import Blockly from "blockly";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 
-import pinLimiter from "./helpers/pinLimiter";
+// import pinLimiter from "./helpers/pinLimiter";
 import toolboxCategories from "./toolbox/toolboxCategories";
 
-const initialXml =
-  '<xml xmlns="https://developers.google.com/blockly/xml"><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"></block></xml>';
+// const initialXml =
+//   '<xml xmlns="https://developers.google.com/blockly/xml"><block type="board_setup" id="{`$}^q8GM8vjCjK?)f5u" x="90" y="30"></block></xml>';
 
 // const changeListener = (event) => {
 //   pinLimiter(event, currWorkspace);
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BlocklyToolbox = ({ toolboxState, setToolboxState }) => {
+const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
   console.log("render");
   const { xml } = toolboxState;
   console.log({ xml });
@@ -131,7 +131,7 @@ const BlocklyToolbox = ({ toolboxState, setToolboxState }) => {
     }
     if (xml !== newXml) {
       console.log("setting state");
-      setToolboxState({ code: prettierCode, xml: newXml });
+      handleToolboxChange({ code: prettierCode, xml: newXml });
     }
   }
 
@@ -169,7 +169,7 @@ const BlocklyToolbox = ({ toolboxState, setToolboxState }) => {
           },
         }}
         workspaceDidChange={workspaceDidChange}
-        // workspaceDidChange={() => setCodeValue("foo")}
+        onImportXmlError={(e) => console.log({ e })}
       />
     </>
   );

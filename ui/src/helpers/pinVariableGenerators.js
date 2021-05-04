@@ -3,7 +3,7 @@ import "blockly/javascript";
 
 import isNullOrEmpty from "./isNullOrEmpty";
 
-const createGenerators = ({ inputType }) => {
+const createGenerators = ({ inputType, color = 230 }) => {
   const pinVariableBlockSetGenerator = ({ useText }) => {
     return function () {
       this.appendDummyInput().appendField("Make Pin");
@@ -13,7 +13,7 @@ const createGenerators = ({ inputType }) => {
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(color);
       this.setTooltip("");
       this.setHelpUrl("");
     };
@@ -58,6 +58,7 @@ const createGenerators = ({ inputType }) => {
         inputType
       );
       this.setOutput(true, inputType);
+      this.setColour(color);
     };
   };
 
@@ -93,7 +94,7 @@ const createGenerators = ({ inputType }) => {
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(color);
       this.setTooltip("");
       this.setHelpUrl("");
     };

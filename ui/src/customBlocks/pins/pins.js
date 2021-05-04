@@ -13,7 +13,7 @@ gpioOptions.forEach((option) => {
     init: function () {
       this.appendDummyInput().appendField(`Pin ${name}`);
       this.setOutput(true, "PIN");
-      this.setColour(230);
+      this.setColour("#9CDEF6");
       this.setTooltip("");
       this.setHelpUrl("");
     },

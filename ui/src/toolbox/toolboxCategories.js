@@ -114,13 +114,13 @@ const toolboxCategories = [
   },
   {
     name: "Pins",
-    colour: "#5CA699",
+    colour: "#9CDEF6",
     blocks: pinBlocks,
   },
 
   {
     name: "LED",
-    colour: "#5CA699",
+    colour: "#6CB0F2",
     blocks: [
       {
         type: "set_led",
@@ -135,7 +135,7 @@ const toolboxCategories = [
   },
   {
     name: "Button",
-    colour: "#5CA699",
+    colour: "#6549DA",
     blocks: [
       {
         type: "set_button",
