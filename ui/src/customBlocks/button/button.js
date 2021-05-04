@@ -1,3 +1,8 @@
+/* eslint-disable prefer-template */
+/* eslint-disable camelcase */
+/* eslint-disable object-shorthand */
+/* eslint-disable func-names */
+/* eslint-disable dot-notation */
 import Blockly from 'blockly';
 import 'blockly/javascript';
 import createGenerators from '../../helpers/pinVariableGenerators';

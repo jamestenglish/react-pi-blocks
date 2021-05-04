@@ -1,3 +1,7 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable func-names */
+/* eslint-disable dot-notation */
 import Blockly from 'blockly';
 import 'blockly/javascript';
 
@@ -5,6 +9,7 @@ import createGenerators from '../../helpers/pinVariableGenerators';
 import isNullOrEmpty from '../../helpers/isNullOrEmpty';
 
 const isAdditionaParamInput = (fieldValue, additionalParamCommands) => {
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < additionalParamCommands.length; i++) {
     if (fieldValue === additionalParamCommands[i][1]) {
       return true;
@@ -14,10 +19,10 @@ const isAdditionaParamInput = (fieldValue, additionalParamCommands) => {
 };
 
 const getAdditionParamsArray = (obj) => {
-  const additionalParamsArray = Object.keys(obj).reduce((acc, key) => {
-    return [...acc, [obj[key].dropDownItem, key]];
-  }, []);
-  console.log({ additionalParamsArray });
+  const additionalParamsArray = Object.keys(obj).reduce(
+    (acc, key) => [...acc, [obj[key].dropDownItem, key]],
+    []
+  );
   return additionalParamsArray;
 };
 
@@ -77,7 +82,6 @@ const additionalParamCommands = {
       );
       const command = block.getFieldValue('LED_COMMAND');
       const arg = block.getFieldValue('BLINK_TIME_IN_MS');
-      console.log({ command, arg });
       const code = `${variableName}.${command}(${arg});\n`;
       return code;
     },
@@ -94,10 +98,7 @@ Blockly.Blocks['led_on_off'] = {
   mutationToDom: function () {
     const container = document.createElement('mutation');
     const fieldValue = this.getFieldValue('LED_COMMAND');
-    console.log('mutationToDom --------');
-    console.log({ mtdFieldValue: fieldValue });
 
-    console.log({ additionalParamsArray });
     const hasAdditionalParam = isAdditionaParamInput(
       fieldValue,
       additionalParamsArray
@@ -111,30 +112,22 @@ Blockly.Blocks['led_on_off'] = {
     return container;
   },
   domToMutation: function (xmlElement) {
-    console.log('domToMutation =========');
     const additionalParam = xmlElement.getAttribute('additionalParam');
-    console.log({ dtmap: additionalParam });
     this.updateShape_(additionalParam);
   },
 
   validate: function (newValue) {
-    console.log('validate ======');
-    console.log({ newValue });
     this.getSourceBlock().updateShape_(newValue);
     return newValue;
   },
   updateShape_: function (additionalParam) {
-    console.log('updateShape_ ======');
-
     const hasAdditionalParam = isAdditionaParamInput(
       additionalParam,
       additionalParamsArray
     );
     const inputExists = this.getInput('ADDITIONAL_PARAM');
-    console.log({ hasAdditionalParam, inputExists, additionalParam });
     if (hasAdditionalParam) {
       if (!inputExists) {
-        console.log('appending');
         const additionalParamMeta = additionalParamCommands[additionalParam];
         const {
           beforeText,
@@ -148,7 +141,6 @@ Blockly.Blocks['led_on_off'] = {
           .appendField(afterText);
       }
     } else if (inputExists) {
-      console.log('removing');
       this.removeInput('ADDITIONAL_PARAM');
     }
   },
@@ -161,8 +153,6 @@ Blockly.JavaScript['led_on_off'] = function (block) {
     fieldValue,
     additionalParamsArray
   );
-  console.log('code ======');
-  console.log({ fieldValue, hasAdditionalParam });
   if (hasAdditionalParam) {
     return additionalParamCommands[fieldValue].codeGenerator(block);
   }

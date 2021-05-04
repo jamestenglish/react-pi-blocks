@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SocketContext } from './socket';
+import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,10 +10,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import Grid from '@material-ui/core/Grid';
-
 import DescriptionIcon from '@material-ui/icons/Description';
+import { SocketContext } from './socket';
 
 const useStyles = makeStyles((theme) => ({
   listRoot: {
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProjectManager = ({ handleProjectNameSelection }) => {
+  console.group('ProjectManager');
   const socket = useContext(SocketContext);
   const [files, setFiles] = useState(null);
   const [inputValue, setInputValue] = useState('');
@@ -43,6 +44,9 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(null);
 
   const handleListItemClick = (event, file) => {
+    console.group('handleListItemClick');
+    console.log({ file });
+    console.groupEnd();
     handleProjectNameSelection(file);
     setSelectedIndex(null);
   };
@@ -52,14 +56,15 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
   };
 
   useEffect(() => {
-    socket.on('connect', function () {
+    socket.on('connect', () => {
       console.log('Client has connected to the server!');
     });
     console.log('emit getFiles');
     socket.emit('getFiles');
     socket.on('files', (data) => {
-      console.log('on files');
+      console.group('on files');
       console.log({ data });
+      console.groupEnd();
       setFiles(data);
     });
   }, [socket]);
@@ -80,7 +85,7 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
       </ListItem>
     ));
   }
-
+  console.groupEnd();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -128,6 +133,10 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
       </Grid>
     </div>
   );
+};
+
+ProjectManager.propTypes = {
+  handleProjectNameSelection: PropTypes.func.isRequired,
 };
 
 export default ProjectManager;

@@ -1,5 +1,7 @@
+/* eslint-disable no-alert */
 import Blockly from 'blockly';
 import 'blockly/javascript';
+
 let pins = [];
 
 const pinLimiter = (event, workspace) => {

@@ -65,8 +65,8 @@ const App = () => {
     setTabValue(newValue);
   };
 
-  const handleProjectNameSelection = useCallback((projectName) => {
-    setProjectName(projectName);
+  const handleProjectNameSelection = useCallback((projectNameToUpdate) => {
+    setProjectName(projectNameToUpdate);
     setTabValue(1);
   }, []);
 
@@ -94,6 +94,7 @@ const App = () => {
 
   useEffect(() => {
     socket.on('file', (file) => {
+      console.group('on file');
       if (file === '') {
         console.log('blank file');
         setToolboxState({ code: '', xml: initialXml });
@@ -102,9 +103,10 @@ const App = () => {
         console.log({ buf });
         setToolboxState({ code: '', xml: buf });
       }
+      console.groupEnd();
     });
   }, []);
-
+  console.groupEnd();
   return (
     <SocketContext.Provider value={socket}>
       <AppBar position="static">
@@ -134,11 +136,7 @@ const App = () => {
         )}
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <textarea
-          id="code"
-          style={{ height: '200px', width: '800px' }}
-          value={toolboxState.code}
-        ></textarea>
+        <pre>{toolboxState.code}</pre>
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
         <pre id="generated-xml">{toolboxState.xml}</pre>

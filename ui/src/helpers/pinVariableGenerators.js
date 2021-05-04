@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable func-names */
+/* eslint-disable arrow-body-style */
 import Blockly from 'blockly';
 import 'blockly/javascript';
 
@@ -32,19 +35,14 @@ const createGenerators = ({ inputType, color = 230 }) => {
         Blockly.JavaScript.ORDER_ATOMIC
       );
 
-      console.log({ pinValue, inputTypeValue });
-
       if (isNullOrEmpty(pinValue) || isNullOrEmpty(inputTypeValue)) {
         return '';
       }
-      console.log({ pinFieldValue: block.getFieldValue('PIN') });
-      console.log({ ledFieldValue: block.getFieldValue(inputType) });
 
       const variableName = Blockly.JavaScript.variableDB_.getName(
         inputTypeValue,
         Blockly.Variables.NAME_TYPE
       );
-      console.log({ variableName });
 
       const code = `${variableName} = new ${constructorName}(${pinValue});\n`;
       return code;
@@ -77,7 +75,6 @@ const createGenerators = ({ inputType, color = 230 }) => {
     dropDownArray,
     validatorFunctionName = null,
   }) => {
-    console.log({ validatorFunctionName });
     return function () {
       let validatorFunc = null;
       if (validatorFunctionName != null) {

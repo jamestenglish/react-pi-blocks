@@ -1,5 +1,4 @@
-const isNullOrEmpty = (input) => {
-  return input === null || input === undefined || input === '';
-};
+const isNullOrEmpty = (input) =>
+  input === null || input === undefined || input === '';
 
 export default isNullOrEmpty;
