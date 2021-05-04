@@ -6,7 +6,7 @@
     "@babel/parser": "^7.12.11",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
-    "blockly": "^5.20210325.1",
+    "blockly": "^3.20200625.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-blockly": "^6.0.1",

@@ -1,4 +1,20 @@
+/* eslint-disable import/newline-after-import, import/first, import/order */
 import './App.css';
+import './customBlocks/custom_Blocks';
+import './customBlocks/required/board_setup_blocks';
+import './customBlocks/led/led';
+import './customBlocks/button/button';
+import './customBlocks/pins/pins';
+// import initBlocks from './customBlocks/custom_Blocks';
+// import initBlocksA from './customBlocks/required/board_setup_blocks';
+// import initBlocksB from './customBlocks/led/led';
+// import initBlocksC from './customBlocks/button/button';
+// import initBlocksD from './customBlocks/pins/pins';
+// initBlocks();
+// initBlocksA();
+// initBlocksB();
+// initBlocksC();
+// initBlocksD();
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,19 +26,7 @@ import BlocklyToolbox from './BlocklyToolbox';
 import Terminal from './Terminal';
 import ProjectManager from './ProjectManager';
 
-import initBlocks from './customBlocks/custom_Blocks';
-import initBlocksA from './customBlocks/required/board_setup_blocks';
-import initBlocksB from './customBlocks/led/led';
-import initBlocksC from './customBlocks/button/button';
-import initBlocksD from './customBlocks/pins/pins';
-
 import { SocketContext, socket } from './socket';
-
-initBlocks();
-initBlocksA();
-initBlocksB();
-initBlocksC();
-initBlocksD();
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
