@@ -8,7 +8,9 @@
 		}
 	},
 	"mounts": [
-		"source=try-node-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+		"source=try-node-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+		"source=blockly-ui-node_modules,target=${containerWorkspaceFolder}/ui/node_modules,type=volume"
+
 	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
