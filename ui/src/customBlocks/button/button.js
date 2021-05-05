@@ -13,11 +13,11 @@ const {
   pinVariableCodeSetGenerator,
   pinVariableBlockGetGenerator,
   pinVariableCodeGetGenerator,
-} = createGenerators({ inputType: 'BUTTON', color: '#749DC4' });
+} = createGenerators({ inputType: 'BUTTON', color: '#6549DA' });
 
 Blockly.Blocks['set_button'] = {
   init: pinVariableBlockSetGenerator({
-    useText: 'be used for LED named',
+    useText: 'be used for Button named',
   }),
 };
 
