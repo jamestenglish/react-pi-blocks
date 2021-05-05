@@ -6,6 +6,7 @@ After=systemd-networkd.socket
 # Only add this first line if you need wifi for your app to function
 #ExecStartPre=/lib/systemd/systemd-networkd-wait-online --interface=wlan0
 # Replace path as appropriate
+WorkingDirectory=/home/pi/Development/react-pi-blocks/server/
 ExecStart=/usr/bin/node /home/pi/Development/react-pi-blocks/server/server.js
 Restart=always
 StandardOutput=syslog
