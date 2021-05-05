@@ -10,7 +10,6 @@
 
 # production
 /build
-/ui/build
 /server/build
 
 # misc

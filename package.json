@@ -10,8 +10,8 @@
     "ui:install": "cd ui && yarn install",
     "server:install": "cd server && yarn install",
     "ui:build": "cd ui && yarn build",
-    "ui:mv": "cd server && rm -rf build && mv ../ui/build .",
-    "setup": "yarn ui:install && yarn server:install && yarn ui:build && yarn ui:mv",
+    "ui:link": "rm -rf server/build && ln -s \"$PWD/ui/build\" \"$PWD/server/build\"",
+    "setup": "yarn server:install && yarn ui:link",
     "server:start": "cd server && yarn start",
     "start": "yarn server:start"
   }
