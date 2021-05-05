@@ -13,6 +13,7 @@
     "ui:link": "rm -rf server/build && ln -s \"$PWD/ui/build\" \"$PWD/server/build\"",
     "setup": "yarn server:install && yarn ui:link",
     "server:start": "cd server && yarn start",
-    "start": "yarn server:start"
+    "start": "yarn server:start",
+    "update": "./scripts/update.sh"
   }
 }
