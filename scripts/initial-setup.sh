@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 yarn setup
-sudo cp /home/pi/Development/react-pi-blocks/service/react-pi-blocks.service /etc/systemd/system/react-pi-blocks.service
+sudo cp /home/pi/Development/react-pi-blocks/scripts/service/react-pi-blocks.service /etc/systemd/system/react-pi-blocks.service
 mkdir -p /home/pi/Development/johnny-five
 mkdir -p /home/pi/react-pi-blocks/files
 cd /home/pi/Development/johnny-five

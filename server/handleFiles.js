@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-var filesDir = "/home/pi/files";
+var filesDir = "/home/pi/react-pi-blocks/files";
 
 if (!fs.existsSync(filesDir)) {
   fs.mkdirSync(filesDir);
