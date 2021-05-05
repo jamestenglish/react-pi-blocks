@@ -117,10 +117,19 @@ const App = () => {
           onChange={handleTabChange}
           aria-label="Blockly Tabs"
         >
-          <Tab label="Projects" />
-          <Tab label="Blockly" disabled={projectName === null} />
-          <Tab label="Code" disabled={projectName === null} />
-          <Tab label="XML" disabled={projectName === null} />
+          <Tab label="Projects" disabled={isProjectRunning} />
+          <Tab
+            label="Blockly"
+            disabled={projectName === null || isProjectRunning}
+          />
+          <Tab
+            label="Code"
+            disabled={projectName === null || isProjectRunning}
+          />
+          <Tab
+            label="XML"
+            disabled={projectName === null || isProjectRunning}
+          />
           <Tab label="Run" />
         </Tabs>
       </AppBar>

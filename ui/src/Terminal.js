@@ -5,7 +5,54 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PanToolIcon from '@material-ui/icons/PanTool';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
 import { SocketContext } from './socket';
+
+const ConfirmationDialogRaw = (props) => {
+  const { onClose, open, ...other } = props;
+
+  const handleCancel = () => {
+    onClose(false);
+  };
+
+  const handleOk = () => {
+    onClose(true);
+  };
+
+  return (
+    <Dialog
+      disableBackdropClick
+      disableEscapeKeyDown
+      maxWidth="xs"
+      aria-labelledby="confirmation-dialog-title"
+      open={open}
+      {...other}
+    >
+      <DialogTitle id="confirmation-dialog-title">Power Off?</DialogTitle>
+      <DialogContent dividers>
+        Are you sure you want to power off?
+      </DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={handleCancel} color="primary">
+          No
+        </Button>
+        <Button onClick={handleOk} color="primary">
+          yes
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+ConfirmationDialogRaw.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+};
 
 const GreenButton = withStyles((theme) => ({
   root: {
@@ -22,12 +69,25 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
   const [response, setResponse] = useState('');
   const [value, setValue] = useState('');
   const messagesEndRef = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const socket = useContext(SocketContext);
+  console.log({ socket });
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const socket = useContext(SocketContext);
-  console.log({ socket });
+  const handleClose = (newValue) => {
+    console.group('handleClose');
+    setOpen(false);
+
+    if (newValue) {
+      console.log('emitting powerOff');
+      socket.emit('powerOff');
+    }
+    console.groupEnd();
+  };
 
   useEffect(() => {
     scrollToBottom();
@@ -95,22 +155,27 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
   };
 
   const useStyles = makeStyles((theme) => ({
-    button: {
+    buttonBar: {
       '& > *': {
         margin: theme.spacing(1),
       },
-
+      width: '100%',
       position: 'fixed',
     },
     terminalContainer: {
       paddingTop: '46px',
     },
+    shutdown: {
+      float: 'right',
+    },
   }));
+
   const classes = useStyles();
   console.groupEnd();
+
   return (
     <>
-      <div className={classes.button}>
+      <div className={classes.buttonBar}>
         <GreenButton
           variant="contained"
           size="small"
@@ -132,6 +197,23 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
         >
           Stop
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          className={classes.shutdown}
+          startIcon={<PowerSettingsNewIcon />}
+          disabled={isProjectRunning}
+          onClick={() => setOpen(true)}
+        >
+          Turn off
+        </Button>
+        <ConfirmationDialogRaw
+          id="power-off-dialog"
+          keepMounted
+          open={open}
+          onClose={handleClose}
+        />
       </div>
       <div className={`terminal ${classes.terminalContainer}`}>
         <div>

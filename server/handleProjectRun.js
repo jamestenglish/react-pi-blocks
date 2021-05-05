@@ -37,6 +37,17 @@ const handleProjectRun = (io, client) => {
     console.groupEnd();
   });
 
+  client.on("powerOff", () => {
+    console.group("on powerOff");
+    console.log();
+    execFile("../scripts/power-off.sh", [], (error, stdout, stderr) => {
+      console.group("powerOff script");
+      console.log({ error, stderr, stdout });
+      console.groupEnd();
+    });
+    console.groupEnd();
+  });
+
   // client.on("saveFile", ({ fileName, contents }) => {
   //   console.log("");
   //   console.log("on saveFile");
