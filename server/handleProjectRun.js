@@ -11,20 +11,12 @@ console.groupEnd = () => {
 };
 
 const handleProjectRun = (io, client) => {
-  client.on("copyProject", ({ projectName }) => {
+  client.on("copyProject", ({ projectCode }) => {
     console.group("on copyProject");
-    console.log({ projectName });
-    //    const copyProgram = `../scripts/.copy-program "${projectName}"`;
+    console.log({ projectCode });
 
-    execFile(
-      "../scripts/copy-project.sh",
-      [projectName],
-      (error, stdout, stderr) => {
-        console.group("copy-project script");
-        console.log({ error, stderr, stdout });
-        console.groupEnd();
-      }
-    );
+    fs.writeFileSync("/home/pi/Development/johnny-five/index.js", projectCode);
+
     console.groupEnd();
   });
   client.on("projectStarted", () => {

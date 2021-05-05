@@ -17,7 +17,7 @@ const GreenButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const Terminal = ({ isProjectRunning, projectName }) => {
+const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
   console.group('Terminal');
   const [response, setResponse] = useState('');
   const [value, setValue] = useState('');
@@ -68,7 +68,7 @@ const Terminal = ({ isProjectRunning, projectName }) => {
     console.group('handleRun');
     console.log('emitting');
 
-    socket.emit('copyProject', { projectName });
+    socket.emit('copyProject', { projectCode });
 
     setTimeout(() => {
       const runProgramCmd =
@@ -115,7 +115,9 @@ const Terminal = ({ isProjectRunning, projectName }) => {
           variant="contained"
           size="small"
           startIcon={<PlayCircleOutlineIcon />}
-          disabled={isProjectRunning || projectName == null}
+          disabled={
+            isProjectRunning || projectName == null || projectCode === ''
+          }
           onClick={handleRun}
         >
           Play
@@ -157,6 +159,7 @@ const Terminal = ({ isProjectRunning, projectName }) => {
 Terminal.propTypes = {
   isProjectRunning: PropTypes.bool.isRequired,
   projectName: PropTypes.string,
+  projectCode: PropTypes.string,
 };
 
 export default Terminal;

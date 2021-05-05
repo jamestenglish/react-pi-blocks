@@ -146,6 +146,7 @@ const App = () => {
       <TabPanel value={tabValue} index={4}>
         <Terminal
           isProjectRunning={isProjectRunning}
+          projectCode={toolboxState.code}
           projectName={projectName}
         />
       </TabPanel>
