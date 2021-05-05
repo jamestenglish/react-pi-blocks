@@ -1,8 +1,19 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PanToolIcon from '@material-ui/icons/PanTool';
 import { SocketContext } from './socket';
+
+const GreenButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(theme.palette.success.main),
+    backgroundColor: theme.palette.success.main,
+    '&:hover': {
+      backgroundColor: theme.palette.success.dark,
+    },
+  },
+}))(Button);
 
 const Terminal = () => {
   console.group('Terminal');
@@ -56,32 +67,35 @@ const Terminal = () => {
       '& > *': {
         margin: theme.spacing(1),
       },
+
+      position: 'fixed',
+    },
+    terminalContainer: {
+      paddingTop: '46px',
     },
   }));
   const classes = useStyles();
   console.groupEnd();
   return (
     <>
-      <div>
-        <Button
+      <div className={classes.button}>
+        <GreenButton
           variant="contained"
-          color="success"
           size="small"
-          className={classes.button}
           startIcon={<PlayCircleOutlineIcon />}
         >
           Play
-        </Button>
+        </GreenButton>
         <Button
           variant="contained"
           color="secondary"
           size="small"
-          startIcon={<PlayCircleOutlineIcon />}
+          startIcon={<PanToolIcon />}
         >
-          Create Button
+          Stop
         </Button>
       </div>
-      <div className="terminal">
+      <div className={`terminal ${classes.terminalContainer}`}>
         <div>
           {/* eslint-disable react/self-closing-comp, react/no-danger */}
           <div
