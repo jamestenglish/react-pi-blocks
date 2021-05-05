@@ -10,6 +10,7 @@ const io = require("socket.io")(server, {
 const spawn = require("child_process").spawn;
 
 const { handleFiles } = require("./handleFiles");
+const { handleProjectRun } = require("./handleProjectRun");
 
 console.log("1");
 app.use(express.static("./build"));
@@ -40,6 +41,7 @@ io.on("connection", function (client) {
     io.emit("message", new Buffer("> " + data));
   });
   handleFiles(io, client);
+  handleProjectRun(io, client);
 });
 
 server.listen(8080, function () {

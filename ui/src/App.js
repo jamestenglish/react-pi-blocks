@@ -53,6 +53,8 @@ const App = () => {
   const [tabValue, setTabValue] = useState(0);
   const [projectName, setProjectName] = useState(null);
 
+  const [isProjectRunning, setIsProjectRunning] = useState(false);
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -97,7 +99,15 @@ const App = () => {
       setTabValue(1);
       console.groupEnd();
     });
+
+    socket.on('projectStatus', (status) => {
+      console.group('on projectStatus');
+      console.log({ status });
+      setIsProjectRunning(status);
+      console.groupEnd();
+    });
   }, []);
+
   console.groupEnd();
   return (
     <SocketContext.Provider value={socket}>
@@ -134,7 +144,10 @@ const App = () => {
         <pre id="generated-xml">{toolboxState.xml}</pre>
       </TabPanel>
       <TabPanel value={tabValue} index={4}>
-        <Terminal />
+        <Terminal
+          isProjectRunning={isProjectRunning}
+          projectName={projectName}
+        />
       </TabPanel>
     </SocketContext.Provider>
   );

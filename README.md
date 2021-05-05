@@ -14,3 +14,7 @@ sudo npm install --global yarn
 sudo ln -s /usr/local/node/bin/yarn /usr/local/bin/yarn
 sudo ln -s /usr/local/node/bin/yarnpkg /usr/local/bin/yarnpkg
 ```
+
+```bash
+ps -ef | grep "sudo node /home/pi/Development/johnny-five/index.js" | grep "root" | awk '{print $2}'
+```

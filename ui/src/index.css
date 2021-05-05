@@ -31,3 +31,7 @@ input:focus.terminal {
   outline: none;
   border: none;
 }
+input.terminal {
+  border-bottom: 1px solid lightgray;
+  width: 95%
+}

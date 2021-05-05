@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -15,7 +17,7 @@ const GreenButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const Terminal = () => {
+const Terminal = ({ isProjectRunning, projectName }) => {
   console.group('Terminal');
   const [response, setResponse] = useState('');
   const [value, setValue] = useState('');
@@ -62,6 +64,36 @@ const Terminal = () => {
     console.groupEnd();
   };
 
+  const handleRun = () => {
+    console.group('handleRun');
+    console.log('emitting');
+
+    socket.emit('copyProject', { projectName });
+
+    setTimeout(() => {
+      const runProgramCmd =
+        'sudo node /home/pi/Development/johnny-five/index.js';
+
+      socket.emit('message', runProgramCmd);
+      socket.emit('projectStarted');
+    }, 1000);
+
+    console.groupEnd();
+  };
+
+  const handleStop = () => {
+    console.group('handleStop');
+    console.log('emitting');
+
+    const exitProgramCmd = `.exit`;
+    socket.emit('message', exitProgramCmd);
+    setTimeout(() => {
+      socket.emit('stopProject');
+    }, 500);
+
+    console.groupEnd();
+  };
+
   const useStyles = makeStyles((theme) => ({
     button: {
       '& > *': {
@@ -83,6 +115,8 @@ const Terminal = () => {
           variant="contained"
           size="small"
           startIcon={<PlayCircleOutlineIcon />}
+          disabled={isProjectRunning || projectName == null}
+          onClick={handleRun}
         >
           Play
         </GreenButton>
@@ -91,6 +125,8 @@ const Terminal = () => {
           color="secondary"
           size="small"
           startIcon={<PanToolIcon />}
+          disabled={!isProjectRunning}
+          onClick={handleStop}
         >
           Stop
         </Button>
@@ -116,6 +152,11 @@ const Terminal = () => {
       </div>
     </>
   );
+};
+
+Terminal.propTypes = {
+  isProjectRunning: PropTypes.bool.isRequired,
+  projectName: PropTypes.string,
 };
 
 export default Terminal;
