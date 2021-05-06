@@ -7,12 +7,16 @@ import jsBlockly from 'blockly/javascript';
 import isNullOrEmpty from './isNullOrEmpty';
 
 const createGenerators = ({ inputType, color = 230 }) => {
-  const pinVariableBlockSetGenerator = ({ useText }) => {
+  const pinVariableBlockSetGenerator = ({ useText, variableName }) => {
     return function () {
       this.appendDummyInput().appendField('Make Pin');
       this.appendValueInput('PIN').setCheck('PIN');
       this.appendDummyInput().appendField(useText);
-      this.appendValueInput(inputType).setCheck(inputType);
+      this.appendDummyInput(inputType).appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        inputType
+      );
+      // this.appendValueInput(inputType).setCheck(inputType);
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
@@ -29,30 +33,23 @@ const createGenerators = ({ inputType, color = 230 }) => {
         'PIN',
         Blockly.JavaScript.ORDER_ATOMIC
       );
-      const inputTypeValue = Blockly.JavaScript.valueToCode(
-        block,
-        inputType,
-        Blockly.JavaScript.ORDER_ATOMIC
-      );
-
-      if (isNullOrEmpty(pinValue) || isNullOrEmpty(inputTypeValue)) {
-        return '';
-      }
-
       const variableName = Blockly.JavaScript.variableDB_.getName(
-        inputTypeValue,
+        block.getFieldValue(inputType),
         Blockly.Variables.NAME_TYPE
       );
 
+      if (isNullOrEmpty(pinValue) || isNullOrEmpty(variableName)) {
+        return '';
+      }
       const code = `${variableName} = new ${constructorName}(${pinValue});\n`;
       return code;
     };
   };
 
-  const pinVariableBlockGetGenerator = ({ useText }) => {
+  const pinVariableBlockGetGenerator = ({ variableName }) => {
     return function () {
       this.appendDummyInput().appendField(
-        new Blockly.FieldVariable(useText, null, [inputType], inputType),
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
         inputType
       );
       this.setOutput(true, inputType);
@@ -73,6 +70,7 @@ const createGenerators = ({ inputType, color = 230 }) => {
 
   const commandBlockGenerator = ({
     dropDownArray,
+    variableName,
     validatorFunctionName = null,
   }) => {
     return function () {
@@ -83,7 +81,13 @@ const createGenerators = ({ inputType, color = 230 }) => {
           validatorFunc = tmpValidatorFunc;
         }
       }
-      this.appendValueInput(inputType).setCheck(inputType).appendField('Make');
+      // this.appendValueInput(inputType).setCheck(inputType).appendField('Make');
+      this.appendDummyInput().appendField('Make');
+      this.appendDummyInput(inputType).appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        inputType
+      );
+
       this.appendDummyInput().appendField(
         new Blockly.FieldDropdown(dropDownArray, validatorFunc),
         `${inputType}_COMMAND`
@@ -99,18 +103,13 @@ const createGenerators = ({ inputType, color = 230 }) => {
 
   const commandCodeGenerator = () => {
     return function (block) {
-      const inputBlock = Blockly.JavaScript.valueToCode(
-        block,
-        inputType,
-        Blockly.JavaScript.ORDER_ATOMIC
-      );
-      if (isNullOrEmpty(inputBlock)) {
-        return '';
-      }
       const variableName = Blockly.JavaScript.variableDB_.getName(
-        inputBlock,
+        block.getFieldValue(inputType),
         Blockly.Variables.NAME_TYPE
       );
+      if (isNullOrEmpty(variableName)) {
+        return '';
+      }
       const command = block.getFieldValue(`${inputType}_COMMAND`);
       const code = `${variableName}${command};\n`;
       return code;

@@ -34,9 +34,11 @@ const {
   commandCodeGenerator,
 } = createGenerators({ inputType: 'LED', color: '#6CB0F2' });
 
+const variableName = 'LED Name';
 Blockly.Blocks['set_led'] = {
   init: pinVariableBlockSetGenerator({
     useText: 'be used for LED named',
+    variableName,
   }),
 };
 
@@ -45,7 +47,7 @@ Blockly.JavaScript['set_led'] = pinVariableCodeSetGenerator({
 });
 
 Blockly.Blocks['get_led'] = {
-  init: pinVariableBlockGetGenerator({ useText: 'LED Name' }),
+  init: pinVariableBlockGetGenerator({ variableName }),
 };
 
 Blockly.JavaScript['get_led'] = pinVariableCodeGetGenerator();
@@ -75,13 +77,13 @@ const additionalParamCommands = {
       if (isNullOrEmpty(inputBlock)) {
         return '';
       }
-      const variableName = Blockly.JavaScript.variableDB_.getName(
+      const variableCodeName = Blockly.JavaScript.variableDB_.getName(
         inputBlock,
         Blockly.Variables.NAME_TYPE
       );
       const command = block.getFieldValue('LED_COMMAND');
       const arg = block.getFieldValue('BLINK_TIME_IN_MS');
-      const code = `${variableName}.${command}(${arg});\n`;
+      const code = `${variableCodeName}.${command}(${arg});\n`;
       return code;
     },
   },
@@ -93,6 +95,7 @@ Blockly.Blocks['led_on_off'] = {
   init: commandBlockGenerator({
     dropDownArray: [...standardCommands, ...additionalParamsArray],
     validatorFunctionName: 'validate',
+    variableName,
   }),
   mutationToDom: function () {
     const container = document.createElement('mutation');

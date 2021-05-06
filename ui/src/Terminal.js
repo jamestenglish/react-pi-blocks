@@ -113,7 +113,6 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
     console.log({ value });
     console.log('emitting');
     socket.emit('message', value);
-    // socket.send(value);
 
     setValue('');
     event.preventDefault();

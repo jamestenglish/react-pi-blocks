@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-template */
 /* eslint-disable camelcase */
 /* eslint-disable object-shorthand */
@@ -8,16 +9,21 @@ import 'blockly/javascript';
 
 import createGenerators from '../../helpers/pinVariableGenerators';
 
+const inputType = 'BUTTON';
+const color = '#6549DA';
+
 const {
   pinVariableBlockSetGenerator,
   pinVariableCodeSetGenerator,
   pinVariableBlockGetGenerator,
   pinVariableCodeGetGenerator,
-} = createGenerators({ inputType: 'BUTTON', color: '#6549DA' });
+} = createGenerators({ inputType, color });
 
+const variableName = 'Button Name';
 Blockly.Blocks['set_button'] = {
   init: pinVariableBlockSetGenerator({
     useText: 'be used for Button named',
+    variableName,
   }),
 };
 
@@ -27,7 +33,7 @@ Blockly.JavaScript['set_button'] = pinVariableCodeSetGenerator({
 
 Blockly.Blocks['get_button'] = {
   init: pinVariableBlockGetGenerator({
-    useText: 'Button Name',
+    variableName,
   }),
 };
 
@@ -35,7 +41,12 @@ Blockly.JavaScript['get_button'] = pinVariableCodeGetGenerator();
 
 Blockly.Blocks['button_on_off'] = {
   init: function () {
-    this.appendValueInput('BUTTON').setCheck('BUTTON').appendField('When');
+    this.appendDummyInput().appendField('When');
+    this.appendDummyInput(inputType).appendField(
+      new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+      inputType
+    );
+    // this.appendValueInput('BUTTON').setCheck('BUTTON').appendField('When');
     this.appendDummyInput()
       .appendField('is')
       .appendField(
@@ -51,7 +62,7 @@ Blockly.Blocks['button_on_off'] = {
       );
     this.appendStatementInput('BUTTON_STMT').setCheck(null);
 
-    this.setColour('#6549DA');
+    this.setColour(color);
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -97,8 +108,14 @@ Blockly.JavaScript['button_on_off'] = function (block) {
     block,
     'BUTTON_STMT'
   );
+
+  const codeVariableName = Blockly.JavaScript.variableDB_.getName(
+    block.getFieldValue(inputType),
+    Blockly.Variables.NAME_TYPE
+  );
+
   const code = `
-  button.on("${buttonCommand}", () => {
+  ${codeVariableName}.on("${buttonCommand}", () => {
     ${statementsMain}
   });
   `;
