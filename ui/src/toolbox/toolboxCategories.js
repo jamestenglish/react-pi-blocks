@@ -168,4 +168,5 @@ const toolboxCategories = [
   },
 ];
 
+console.log({ toolboxCategories });
 export default toolboxCategories;

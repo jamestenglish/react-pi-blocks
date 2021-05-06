@@ -19,6 +19,7 @@ gpioOptions.forEach((option) => {
       this.setColour(COLORS[PIN]);
       this.setTooltip('');
       this.setHelpUrl('');
+      // this.isDuplic
     },
   };
 

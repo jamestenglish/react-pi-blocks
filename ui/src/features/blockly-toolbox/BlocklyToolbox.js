@@ -7,8 +7,18 @@ import ReactBlockly from 'react-blockly';
 import Blockly from 'blockly';
 
 import toolboxCategories from 'toolbox/toolboxCategories';
+import gpioOptions from 'customBlocks/constants/gpioOptions';
+
 import workspaceDidChangeInner from './workspaceDidChangeInner';
 
+const pinBlocksLimiters = gpioOptions.reduce((acc, option) => {
+  const [name] = option;
+  const key = `pin_${name.replaceAll('#', '')}`;
+  return {
+    ...acc,
+    [key]: 1,
+  };
+}, {});
 const onImportXmlError = (e) => {
   console.group('xml error');
   console.error(e);
@@ -87,6 +97,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
             colour: '#ccc',
             snap: true,
           },
+          maxInstances: pinBlocksLimiters,
         }}
         workspaceDidChange={workspaceDidChange}
         onImportXmlError={onImportXmlError}
