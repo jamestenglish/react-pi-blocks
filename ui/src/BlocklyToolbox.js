@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,6 +30,9 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
   const { xml } = toolboxState;
   console.log({ xml });
 
+  const workspaceRef = useRef();
+  console.log({ workspaceRef });
+
   let initialized = false;
   let currWorkspace;
 
@@ -38,14 +41,14 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
       Blockly.Variables.createVariableButtonHandler(currWorkspace, null, type);
     }
   };
-  function workspaceDidChange(workspace) {
+  const workspaceDidChange = (workspace) => {
     currWorkspace = workspace;
     if (!initialized && workspace) {
-      initialized = true;
       console.group('initialization');
       console.log('Initializing Workspace');
       console.groupEnd();
     }
+    console.log({ workspace });
     const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
     const code = Blockly.JavaScript.workspaceToCode(workspace);
     const rearrangedCode = `
@@ -68,13 +71,14 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
       console.error(err);
       console.groupEnd();
     }
-    if (xml !== newXml) {
+    if (xml !== newXml || !initialized) {
       console.group('xml changed');
       console.log('setting state');
       console.groupEnd();
       handleToolboxChange({ code: prettierCode, xml: newXml });
     }
-  }
+    initialized = true;
+  };
 
   const classes = useStyles();
   console.groupEnd();
@@ -99,6 +103,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
         </Button>
       </div>
       <ReactBlockly
+        ref={workspaceRef}
         toolboxCategories={toolboxCategories}
         initialXml={xml}
         wrapperDivClassName="fill-height"
@@ -112,6 +117,12 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
         }}
         workspaceDidChange={workspaceDidChange}
         onImportXmlError={onImportXmlError}
+        processToolboxCategory={(toolboxCategory) => {
+          console.group('processToolboxCategory');
+          console.log({ toolboxCategory });
+          console.groupEnd();
+          return toolboxCategory;
+        }}
       />
     </>
   );

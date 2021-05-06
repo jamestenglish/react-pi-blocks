@@ -51,7 +51,6 @@ const ConfirmationDialogRaw = (props) => {
 ConfirmationDialogRaw.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
 };
 
 const GreenButton = withStyles((theme) => ({
