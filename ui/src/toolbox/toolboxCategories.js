@@ -1,3 +1,4 @@
+import { LED, BUTTON, PIN, COLORS } from 'constants/blockConstants';
 import gpioOptions from '../customBlocks/constants/gpioOptions';
 
 const pinBlocks = gpioOptions.map((option) => {
@@ -114,13 +115,13 @@ const toolboxCategories = [
   },
   {
     name: 'Pins',
-    colour: '#9CDEF6',
+    colour: COLORS[PIN],
     blocks: pinBlocks,
   },
 
   {
     name: 'LED',
-    colour: '#6CB0F2',
+    colour: COLORS[LED],
     blocks: [
       {
         type: 'set_led',
@@ -135,7 +136,7 @@ const toolboxCategories = [
   },
   {
     name: 'Button',
-    colour: '#6549DA',
+    colour: COLORS[BUTTON],
     blocks: [
       {
         type: 'set_button',

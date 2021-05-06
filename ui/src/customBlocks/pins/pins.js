@@ -3,6 +3,7 @@
 import Blockly from 'blockly';
 import 'blockly/javascript';
 
+import { PIN, COLORS } from 'constants/blockConstants';
 import gpioOptions from '../constants/gpioOptions';
 
 gpioOptions.forEach((option) => {
@@ -14,8 +15,8 @@ gpioOptions.forEach((option) => {
   Blockly.Blocks[blockName] = {
     init: function () {
       this.appendDummyInput().appendField(`Pin ${name}`);
-      this.setOutput(true, 'PIN');
-      this.setColour('#9CDEF6');
+      this.setOutput(true, PIN);
+      this.setColour(COLORS[PIN]);
       this.setTooltip('');
       this.setHelpUrl('');
     },
@@ -30,7 +31,7 @@ gpioOptions.forEach((option) => {
 Blockly.Blocks['pin_a'] = {
   init: function () {
     this.appendDummyInput().appendField('Pin');
-    this.setOutput(true, 'PIN');
+    this.setOutput(true, PIN);
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');

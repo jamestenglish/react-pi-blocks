@@ -4,8 +4,13 @@
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
 import 'blockly/javascript';
-import createGenerators from '../../helpers/pinVariableGenerators';
-import isNullOrEmpty from '../../helpers/isNullOrEmpty';
+import { LED, COLORS } from 'constants/blockConstants';
+
+import createGenerators from 'helpers/pinVariableGenerators';
+import isNullOrEmpty from 'helpers/isNullOrEmpty';
+
+const inputType = LED;
+const color = COLORS[LED];
 
 const isAdditionaParamInput = (fieldValue, additionalParamCommands) => {
   // eslint-disable-next-line no-plusplus
@@ -32,7 +37,7 @@ const {
   pinVariableCodeGetGenerator,
   commandBlockGenerator,
   commandCodeGenerator,
-} = createGenerators({ inputType: 'LED', color: '#6CB0F2' });
+} = createGenerators({ inputType, color });
 
 const variableName = 'LED Name';
 Blockly.Blocks['set_led'] = {

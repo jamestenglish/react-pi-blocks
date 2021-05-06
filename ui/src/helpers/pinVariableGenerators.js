@@ -4,13 +4,15 @@
 import Blockly from 'blockly';
 import jsBlockly from 'blockly/javascript';
 
+import { PIN } from 'constants/blockConstants';
+
 import isNullOrEmpty from './isNullOrEmpty';
 
 const createGenerators = ({ inputType, color = 230 }) => {
   const pinVariableBlockSetGenerator = ({ useText, variableName }) => {
     return function () {
       this.appendDummyInput().appendField('Make Pin');
-      this.appendValueInput('PIN').setCheck('PIN');
+      this.appendValueInput(PIN).setCheck(PIN);
       this.appendDummyInput().appendField(useText);
       this.appendDummyInput(inputType).appendField(
         new Blockly.FieldVariable(variableName, null, [inputType], inputType),
@@ -30,7 +32,7 @@ const createGenerators = ({ inputType, color = 230 }) => {
     return function (block) {
       const pinValue = Blockly.JavaScript.valueToCode(
         block,
-        'PIN',
+        PIN,
         Blockly.JavaScript.ORDER_ATOMIC
       );
       const variableName = Blockly.JavaScript.variableDB_.getName(

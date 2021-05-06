@@ -6,11 +6,12 @@
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
 import 'blockly/javascript';
+import { BUTTON, COLORS } from 'constants/blockConstants';
 
-import createGenerators from '../../helpers/pinVariableGenerators';
+import createGenerators from 'helpers/pinVariableGenerators';
 
-const inputType = 'BUTTON';
-const color = '#6549DA';
+const inputType = BUTTON;
+const color = COLORS[BUTTON];
 
 const {
   pinVariableBlockSetGenerator,
