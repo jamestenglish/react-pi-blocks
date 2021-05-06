@@ -13,11 +13,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import BlocklyToolbox from './BlocklyToolbox';
+import BlocklyToolbox from 'features/blockly-toolbox/BlocklyToolbox';
 import Terminal from './Terminal';
-import ProjectManager from './ProjectManager';
+import ProjectManager from 'features/project-manager/ProjectManager';
 
-import { SocketContext, socket } from './socket';
+import { SocketContext, socket } from 'socket-config/socket';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,6 +86,10 @@ const App = () => {
   }, [projectName]);
 
   useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Client has connected to the server!');
+    });
+
     socket.on('file', (file) => {
       console.group('on file');
       if (file === '') {

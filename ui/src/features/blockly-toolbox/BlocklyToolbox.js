@@ -6,10 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import ReactBlockly from 'react-blockly';
 import Blockly from 'blockly';
 
-import prettier from 'prettier/standalone';
-import parserBabel from 'prettier/parser-babel';
-
-import toolboxCategories from './toolbox/toolboxCategories';
+import toolboxCategories from 'toolbox/toolboxCategories';
+import workspaceDidChangeInner from './workspaceDidChangeInner';
 
 const onImportXmlError = (e) => {
   console.group('xml error');
@@ -31,57 +29,32 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
   console.log({ xml });
 
   const workspaceRef = useRef();
+  const initializedRef = useRef(false);
+
   console.log({ workspaceRef });
 
-  let initialized = false;
-  let currWorkspace;
-
   const createVariable = (type) => {
-    if (currWorkspace) {
-      Blockly.Variables.createVariableButtonHandler(currWorkspace, null, type);
+    if (workspaceRef.current) {
+      Blockly.Variables.createVariableButtonHandler(
+        workspaceRef.current,
+        null,
+        type
+      );
     }
   };
-  const workspaceDidChange = (workspace) => {
-    currWorkspace = workspace;
-    if (!initialized && workspace) {
-      console.group('initialization');
-      console.log('Initializing Workspace');
-      console.groupEnd();
-    }
-    console.log({ workspace });
-    const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
-    const code = Blockly.JavaScript.workspaceToCode(workspace);
-    const rearrangedCode = `
-  const { RaspiIO } = require('raspi-io');
-  const five = require("johnny-five");
-  const board = new five.Board({
-    io: new RaspiIO()
-  });
 
-  ${code}`;
-
-    let prettierCode = rearrangedCode;
-    try {
-      prettierCode = prettier.format(rearrangedCode, {
-        parser: 'babel',
-        plugins: [parserBabel],
-      });
-    } catch (err) {
-      console.group('Prettier Error');
-      console.error(err);
-      console.groupEnd();
-    }
-    if (xml !== newXml || !initialized) {
-      console.group('xml changed');
-      console.log('setting state');
-      console.groupEnd();
-      handleToolboxChange({ code: prettierCode, xml: newXml });
-    }
-    initialized = true;
-  };
+  const workspaceDidChange = (workspace) =>
+    workspaceDidChangeInner(
+      workspace,
+      initializedRef,
+      workspaceRef,
+      xml,
+      handleToolboxChange
+    );
 
   const classes = useStyles();
   console.groupEnd();
+
   return (
     <>
       <div className={classes.root}>

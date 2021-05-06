@@ -34,4 +34,11 @@ module.exports = {
     ],
     'react/jsx-props-no-spreading': [0],
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['/workspaces/react-pi-blocks/ui/src'],
+      },
+    },
+  },
 };

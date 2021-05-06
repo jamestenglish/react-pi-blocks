@@ -8,7 +8,7 @@ if (!fs.existsSync(filesDir)) {
 }
 
 const handleFiles = (io, client) => {
-  client.on("getFiles", () => {
+  const getFilesHandler = () => {
     console.log("");
     console.log("on getFiles");
     const xmlFiles = fs.readdirSync(filesDir).filter((fileName) => {
@@ -19,7 +19,32 @@ const handleFiles = (io, client) => {
     console.log({ xmlFiles });
     io.emit("files", xmlFiles);
     console.log("-----on getFiles");
+  };
+
+  client.on("deleteFile", ({ fileName }) => {
+    console.log("on deleteFile");
+    console.log({ fileName });
+    const filePath = path.join(filesDir, fileName);
+    if (fs.existsSync(filePath)) {
+      console.log("deleting");
+      fs.unlinkSync(filePath);
+      getFilesHandler();
+    }
   });
+
+  client.on("copyFile", ({ fileName, newFileName }) => {
+    console.log("on copyFile");
+    console.log({ fileName, newFileName });
+    const filePath = path.join(filesDir, fileName);
+    const newFilePath = path.join(filesDir, newFileName);
+
+    if (fs.existsSync(filePath) && !fs.existsSync(newFilePath)) {
+      console.log("copying");
+      fs.copyFileSync(filePath, newFilePath);
+      getFilesHandler();
+    }
+  });
+  client.on("getFiles", getFilesHandler);
 
   client.on("saveFile", ({ fileName, contents }) => {
     console.log("");

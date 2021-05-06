@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-import { SocketContext } from './socket';
+import { SocketContext } from 'socket-config/socket';
 
 const ConfirmationDialogRaw = (props) => {
   const { onClose, open, ...other } = props;
@@ -93,9 +93,6 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
   }, [response]);
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Client has connected to the server!');
-    });
     socket.on('message', (data) => {
       console.group('on message');
       const buf = String.fromCharCode.apply(null, new Uint8Array(data));
