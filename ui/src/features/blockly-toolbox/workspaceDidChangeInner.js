@@ -17,7 +17,7 @@ const workspaceDidChangeInner = (
     console.log('Initializing Workspace');
     console.groupEnd();
   }
-  console.log({ workspace });
+  // console.log({ workspace });
   const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(workspace));
   const code = Blockly.JavaScript.workspaceToCode(workspace);
   const rearrangedCode = `
@@ -27,9 +27,10 @@ const workspaceDidChangeInner = (
         io: new RaspiIO()
       });
     
-      ${code}`;
+      ${code}`.replaceAll('window.alert', 'console.log');
 
   let prettierCode = rearrangedCode;
+
   try {
     prettierCode = prettier.format(rearrangedCode, {
       parser: 'babel',

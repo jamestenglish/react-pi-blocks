@@ -80,6 +80,7 @@ const toolboxCategories = [
       {
         type: 'text',
       },
+      { type: 'text_print' },
       {
         type: 'text_join',
       },
