@@ -4,7 +4,9 @@ import './customBlocks/custom_Blocks';
 import './customBlocks/required/board_setup_blocks';
 import './customBlocks/led/led';
 import './customBlocks/button/button';
-import './customBlocks/pins/pins';
+import './customBlocks/GPIOpins/pins';
+import './customBlocks/virtualBoards/PCF8591';
+import './customBlocks/sensor/sensor';
 
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';

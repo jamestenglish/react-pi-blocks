@@ -8,37 +8,32 @@ import Blockly from 'blockly';
 import 'blockly/javascript';
 import { BUTTON, COLORS } from 'constants/blockConstants';
 
-import createGenerators from 'helpers/pinVariableGenerators';
+import createGenerators from 'helpers/pinInputGenerators';
 
 const inputType = BUTTON;
 const color = COLORS[BUTTON];
-
-const {
-  pinVariableBlockSetGenerator,
-  pinVariableCodeSetGenerator,
-  pinVariableBlockGetGenerator,
-  pinVariableCodeGetGenerator,
-} = createGenerators({ inputType, color });
-
 const variableName = 'Button Name';
+
+const { code, block } = createGenerators({ inputType, color });
+
 Blockly.Blocks['set_button'] = {
-  init: pinVariableBlockSetGenerator({
+  init: block.setGenerator({
     useText: 'be used for Button named',
     variableName,
   }),
 };
 
-Blockly.JavaScript['set_button'] = pinVariableCodeSetGenerator({
+Blockly.JavaScript['set_button'] = code.setGenerator({
   constructorName: 'five.Button',
 });
 
 Blockly.Blocks['get_button'] = {
-  init: pinVariableBlockGetGenerator({
+  init: block.getGenerator({
     variableName,
   }),
 };
 
-Blockly.JavaScript['get_button'] = pinVariableCodeGetGenerator();
+Blockly.JavaScript['get_button'] = code.getGenerator();
 
 Blockly.Blocks['button_on_off'] = {
   init: function () {
@@ -102,24 +97,24 @@ Blockly.Blocks['button_on_off'] = {
   // },
 };
 
-Blockly.JavaScript['button_on_off'] = function (block) {
-  const buttonCommand = block.getFieldValue('BUTTON_COMMAND');
+Blockly.JavaScript['button_on_off'] = function (blockIn) {
+  const buttonCommand = blockIn.getFieldValue('BUTTON_COMMAND');
 
   const statementsMain = Blockly.JavaScript.statementToCode(
-    block,
+    blockIn,
     'BUTTON_STMT'
   );
 
   const codeVariableName = Blockly.JavaScript.variableDB_.getName(
-    block.getFieldValue(inputType),
+    blockIn.getFieldValue(inputType),
     Blockly.Variables.NAME_TYPE
   );
 
-  const code = `
+  const codeOut = `
   ${codeVariableName}.on("${buttonCommand}", () => {
     ${statementsMain}
   });
   `;
 
-  return code;
+  return codeOut;
 };

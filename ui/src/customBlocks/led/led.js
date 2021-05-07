@@ -6,7 +6,7 @@ import Blockly from 'blockly';
 import 'blockly/javascript';
 import { LED, COLORS } from 'constants/blockConstants';
 
-import createGenerators from 'helpers/pinVariableGenerators';
+import createGenerators from 'helpers/pinInputGenerators';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
 
 const inputType = LED;
@@ -30,32 +30,25 @@ const getAdditionParamsArray = (obj) => {
   return additionalParamsArray;
 };
 
-const {
-  pinVariableBlockSetGenerator,
-  pinVariableCodeSetGenerator,
-  pinVariableBlockGetGenerator,
-  pinVariableCodeGetGenerator,
-  commandBlockGenerator,
-  commandCodeGenerator,
-} = createGenerators({ inputType, color });
+const { code, block } = createGenerators({ inputType, color });
 
 const variableName = 'LED Name';
 Blockly.Blocks['set_led'] = {
-  init: pinVariableBlockSetGenerator({
+  init: block.setGenerator({
     useText: 'be used for LED named',
     variableName,
   }),
 };
 
-Blockly.JavaScript['set_led'] = pinVariableCodeSetGenerator({
+Blockly.JavaScript['set_led'] = code.setGenerator({
   constructorName: 'five.Led',
 });
 
 Blockly.Blocks['get_led'] = {
-  init: pinVariableBlockGetGenerator({ variableName }),
+  init: block.getGenerator({ variableName }),
 };
 
-Blockly.JavaScript['get_led'] = pinVariableCodeGetGenerator();
+Blockly.JavaScript['get_led'] = code.getGenerator();
 
 const standardCommands = [
   ['Turn On', '.on()'],
@@ -73,9 +66,9 @@ const additionalParamCommands = {
     afterText: 'milliseconds',
     fieldBlock: new Blockly.FieldNumber(500, 0),
     fieldName: 'BLINK_TIME_IN_MS',
-    codeGenerator: function (block) {
+    codeGenerator: function (blockIn) {
       const inputBlock = Blockly.JavaScript.valueToCode(
-        block,
+        blockIn,
         'LED',
         Blockly.JavaScript.ORDER_ATOMIC
       );
@@ -86,10 +79,10 @@ const additionalParamCommands = {
         inputBlock,
         Blockly.Variables.NAME_TYPE
       );
-      const command = block.getFieldValue('LED_COMMAND');
-      const arg = block.getFieldValue('BLINK_TIME_IN_MS');
-      const code = `${variableCodeName}.${command}(${arg});\n`;
-      return code;
+      const command = blockIn.getFieldValue('LED_COMMAND');
+      const arg = blockIn.getFieldValue('BLINK_TIME_IN_MS');
+      const codeOut = `${variableCodeName}.${command}(${arg});\n`;
+      return codeOut;
     },
   },
 };
@@ -97,7 +90,7 @@ const additionalParamCommands = {
 const additionalParamsArray = getAdditionParamsArray(additionalParamCommands);
 
 Blockly.Blocks['led_on_off'] = {
-  init: commandBlockGenerator({
+  init: block.commandGenerator({
     dropDownArray: [...standardCommands, ...additionalParamsArray],
     validatorFunctionName: 'validate',
     variableName,
@@ -153,15 +146,15 @@ Blockly.Blocks['led_on_off'] = {
   },
 };
 
-Blockly.JavaScript['led_on_off'] = function (block) {
-  const fieldValue = block.getFieldValue('LED_COMMAND');
+Blockly.JavaScript['led_on_off'] = function (blockIn) {
+  const fieldValue = blockIn.getFieldValue('LED_COMMAND');
 
   const hasAdditionalParam = isAdditionaParamInput(
     fieldValue,
     additionalParamsArray
   );
   if (hasAdditionalParam) {
-    return additionalParamCommands[fieldValue].codeGenerator(block);
+    return additionalParamCommands[fieldValue].codeGenerator(blockIn);
   }
-  return commandCodeGenerator()(block);
+  return code.commandGenerator()(blockIn);
 };

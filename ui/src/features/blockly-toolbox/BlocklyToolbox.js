@@ -5,20 +5,37 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ReactBlockly from 'react-blockly';
 import Blockly from 'blockly';
+import { LED, BUTTON, SENSOR, PCF8591 } from 'constants/blockConstants';
+import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
+import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
 
-import toolboxCategories from 'toolbox/toolboxCategories';
-import gpioOptions from 'customBlocks/constants/gpioOptions';
+import toolboxCategories from './toolboxCategories';
 
 import workspaceDidChangeInner from './workspaceDidChangeInner';
 
-const pinBlocksLimiters = gpioOptions.reduce((acc, option) => {
+const GPIOPinBlocksLimiters = GPIOPins.reduce((acc, option) => {
   const [name] = option;
-  const key = `pin_${name.replaceAll('#', '')}`;
+  const key = getGPIOBlockName(name);
   return {
     ...acc,
     [key]: 1,
   };
 }, {});
+
+const PCF8591PinBlocksLimiters = PCF8591Pins.reduce((acc, name) => {
+  const key = getPCF8591PinBlockName(name);
+
+  return {
+    ...acc,
+    [key]: 1,
+  };
+}, {});
+
+const blockLimiters = {
+  ...GPIOPinBlocksLimiters,
+  ...PCF8591PinBlocksLimiters,
+};
+
 const onImportXmlError = (e) => {
   console.group('xml error');
   console.error(e);
@@ -72,7 +89,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => createVariable('LED')}
+          onClick={() => createVariable(LED)}
         >
           Create LED
         </Button>
@@ -80,9 +97,26 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => createVariable('BUTTON')}
+          onClick={() => createVariable(BUTTON)}
         >
           Create Button
+        </Button>
+
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => createVariable(PCF8591)}
+        >
+          Create PCF8591
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => createVariable(SENSOR)}
+        >
+          Create Sensor
         </Button>
       </div>
       <ReactBlockly
@@ -97,7 +131,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
             colour: '#ccc',
             snap: true,
           },
-          maxInstances: pinBlocksLimiters,
+          maxInstances: blockLimiters,
         }}
         workspaceDidChange={workspaceDidChange}
         onImportXmlError={onImportXmlError}
