@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
   console.group('BlocklyToolbox');
   const { xml } = toolboxState;
-  console.log({ xml });
+  // console.log({ xml });
 
   const workspaceRef = useRef();
   const initializedRef = useRef(false);

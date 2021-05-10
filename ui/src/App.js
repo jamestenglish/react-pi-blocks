@@ -69,9 +69,9 @@ const App = () => {
     ({ xml, code }) => {
       setToolboxState({ xml, code });
       if (projectName !== null) {
-        console.group('handleToolboxChange');
-        console.log({ xml, projectName });
-        console.groupEnd();
+        // console.group('handleToolboxChange');
+        // console.log({ xml, projectName });
+        // console.groupEnd();
         socket.emit('saveFile', { contents: xml, fileName: projectName });
       }
     },

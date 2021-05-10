@@ -31,6 +31,8 @@ const customOptionsXmlAttributeName = 'customOptions';
 const customGPIOXmlAttributeName = 'customGPIO';
 const CUSTOM_OPTIONS_DUMMY_INPUT = 'CUSTOM_OPTIONS_DUMMY_INPUT';
 const PIN_INPUT = 'PIN_INPUT';
+const SENSOR_EVENT_INPUT = 'SENSOR_EVENT';
+const SENSOR_ON_STATEMENT = 'SENSOR_ON_STATEMENT';
 
 const getCustomOptionsFieldName = (inputTypeIn) =>
   `${inputTypeIn}_CUSTOM_OPTIONS`;
@@ -42,7 +44,40 @@ const getHasCustomOptions = (fieldValue) =>
 
 const getHasCustomGPIO = (fieldValue) => fieldValue === CUSTOM_GPIO_OPTION;
 
-Blockly.Blocks['set_sensor'] = {
+const SENSOR_BLOCK_TYPES = ['set_sensor', 'sensor_on', 'get_sensor_value'];
+
+const SENSOR_BLOCKS_MAP = SENSOR_BLOCK_TYPES.reduce((acc, cur) => {
+  return {
+    ...acc,
+    [cur]: cur,
+  };
+}, {});
+
+const doSkipOnChange = (event) => {
+  const wrongEvent = event.type !== Blockly.Events.BLOCK_MOVE;
+  const isMovingStarting =
+    event.newParentId === undefined && event.oldParentId !== undefined;
+  return wrongEvent || isMovingStarting;
+};
+
+const getFirstSurroundedAncestorByType = (block, surroundAncestorType) => {
+  const initialSurroundParent = block.getSurroundParent();
+  let surroundParent = initialSurroundParent;
+  console.group('hasSurroundedAncestor');
+  while (surroundParent != null) {
+    console.log({ surroundParent });
+    if (surroundParent.type === surroundAncestorType) {
+      break;
+    }
+    surroundParent = surroundParent.getSurroundParent();
+  }
+  console.groupEnd();
+  return surroundParent;
+};
+
+const isNullOrUndefined = (obj) => obj === null || obj === undefined;
+
+Blockly.Blocks[SENSOR_BLOCKS_MAP['set_sensor']] = {
   init: function () {
     this.appendDummyInput()
       .appendField(createText)
@@ -165,7 +200,7 @@ Blockly.Blocks['set_sensor'] = {
   },
 };
 
-Blockly.JavaScript['set_sensor'] = function (block) {
+Blockly.JavaScript[SENSOR_BLOCKS_MAP['set_sensor']] = function (block) {
   const codeVariableName = Blockly.JavaScript.variableDB_.getName(
     block.getFieldValue(inputType),
     Blockly.Variables.NAME_TYPE
@@ -211,3 +246,91 @@ Blockly.JavaScript['set_sensor'] = function (block) {
     ${codeVariableName} = new five.Sensor(${argsVariableName});`;
   return code;
 };
+
+Blockly.Blocks[SENSOR_BLOCKS_MAP['sensor_on']] = {
+  init: function () {
+    this.appendDummyInput()
+      .appendField('When sensor: ')
+      .appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        inputType
+      );
+    this.appendDummyInput().appendField(
+      new Blockly.FieldDropdown([
+        ['Changes', 'change'],
+        ['Gets any data', 'data'],
+      ]),
+      SENSOR_EVENT_INPUT
+    );
+    this.appendStatementInput(SENSOR_ON_STATEMENT).setCheck(null);
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(color);
+  },
+};
+
+Blockly.JavaScript[SENSOR_BLOCKS_MAP['sensor_on']] = function (blockIn) {
+  const sensorEvent = blockIn.getFieldValue(SENSOR_EVENT_INPUT);
+
+  const statementsMain = Blockly.JavaScript.statementToCode(
+    blockIn,
+    SENSOR_ON_STATEMENT
+  );
+  console.log({ sensorEvent, statementsMain });
+  const code = ``;
+  return code;
+};
+
+Blockly.Blocks[SENSOR_BLOCKS_MAP['get_sensor_value']] = {
+  init: function () {
+    this.appendDummyInput().appendField(`Test`);
+    this.setOutput(true, SENSOR);
+    this.setColour(COLORS[SENSOR]);
+    this.setTooltip('');
+    this.setHelpUrl('');
+    this.setOnChange(this._onChange);
+  },
+  _onChange: function (event) {
+    if (doSkipOnChange(event)) {
+      return;
+    }
+    console.group('onChange');
+    const surroundAncestor = getFirstSurroundedAncestorByType(
+      this,
+      'sensor_on'
+    );
+    const hasSensorSurround = !isNullOrUndefined(surroundAncestor);
+    const initialSurroundParent = this.getSurroundParent();
+
+    console.log({
+      event,
+      hasSensorSurround,
+      initialSurroundParent,
+      type: event.type,
+    });
+    const isEnabled = this.isEnabled();
+    if (!hasSensorSurround && initialSurroundParent != null) {
+      this.setEnabled(false);
+      if (isEnabled) {
+        alert('This can only be under a "When Sensor" block.');
+      }
+    } else {
+      this.setEnabled(true);
+    }
+    console.groupEnd();
+  },
+};
+
+// scaleTo(low, high) (integer) Return the sensor's present value, scaled to a new value within the specified low/high range.
+
+// fscaleTo(low, high) (float) Return the sensor's present value, scaled to a new value within the specified low/high range.
+// booleanAt(barrier) Set a midpoint barrier value used to calculate returned value of the .boolean property. The barrier is based on the scaled value, not the raw value. Defaults to 50% (512 when unscaled).
+// within callback!
+Blockly.JavaScript[SENSOR_BLOCKS_MAP['get_sensor_value']] = function () {
+  const code = ``;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+export default SENSOR_BLOCK_TYPES;
