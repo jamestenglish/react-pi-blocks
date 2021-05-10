@@ -71,7 +71,7 @@ const Terminal = ({ isProjectRunning, projectName, projectCode }) => {
   const [open, setOpen] = useState(false);
 
   const socket = useContext(SocketContext);
-  console.log({ socket });
+  // console.log({ socket });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

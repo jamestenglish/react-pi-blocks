@@ -8,6 +8,11 @@ import {
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
+import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
+
+const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map((sensorBlockType) => {
+  return { type: sensorBlockType };
+});
 
 const GPIOpinBlocks = GPIOPins.map((option) => {
   const [name] = option;
@@ -185,11 +190,7 @@ const toolboxCategories = [
   {
     name: 'Sensor',
     colour: COLORS[SENSOR],
-    blocks: [
-      {
-        type: 'set_sensor',
-      },
-    ],
+    blocks: [...SENSOR_BLOCKS],
   },
   {
     name: 'Lists',
