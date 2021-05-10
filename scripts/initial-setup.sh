@@ -19,9 +19,10 @@ else
     echo "not a pi zero, please install node yourself"
 fi
 sudo npm install --global yarn   
-sudo ln -s /usr/local/node/bin/yarn /usr/local/bin/yarn
-sudo ln -s /usr/local/node/bin/yarnpkg /usr/local/bin/yarnpkg
+# sudo ln -s /usr/local/node/bin/yarn /usr/local/bin/yarn
+# sudo ln -s /usr/local/node/bin/yarnpkg /usr/local/bin/yarnpkg
 
+yarn
 yarn setup
 sudo cp /home/pi/Development/react-pi-blocks/scripts/service/react-pi-blocks.service /etc/systemd/system/react-pi-blocks.service
 mkdir -p /home/pi/Development/johnny-five
