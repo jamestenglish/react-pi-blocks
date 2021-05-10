@@ -10,5 +10,5 @@ export const COLORS = {
   [BUTTON]: '#6549DA',
   [PIN]: '#9CDEF6',
   [PCF8591]: '#FCA481',
-  [SENSOR]: '#123456',
+  [SENSOR]: '#A392E9',
 };

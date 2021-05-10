@@ -64,7 +64,7 @@ const additionalParamCommands = {
     dropDownItem: 'Blink',
     beforeText: 'every',
     afterText: 'milliseconds',
-    fieldBlock: new Blockly.FieldNumber(500, 0),
+    createFieldBlock: () => new Blockly.FieldNumber(500, 0),
     fieldName: 'BLINK_TIME_IN_MS',
     codeGenerator: function (blockIn) {
       const inputBlock = Blockly.JavaScript.valueToCode(
@@ -131,13 +131,13 @@ Blockly.Blocks['led_on_off'] = {
         const additionalParamMeta = additionalParamCommands[additionalParam];
         const {
           beforeText,
-          fieldBlock,
+          createFieldBlock,
           fieldName,
           afterText,
         } = additionalParamMeta;
         this.appendDummyInput('ADDITIONAL_PARAM')
           .appendField(beforeText)
-          .appendField(fieldBlock, fieldName)
+          .appendField(createFieldBlock(), fieldName)
           .appendField(afterText);
       }
     } else if (inputExists) {

@@ -1,4 +1,5 @@
 #!/bin/bash -eux
+
 NODE_VERSION="14.16.1"
 WHAT_AM_I=$(uname -m)
 DO_NODE_INSTALL=${DO_NODE_INSTALL:-true}
@@ -30,6 +31,8 @@ sudo npm install --global yarn
 # sudo ln -s /usr/local/node/bin/yarnpkg /usr/local/bin/yarnpkg
 
 yarn
+# https://github.com/dhis2/notes/issues/29
+yarn config set network-timeout 600000 -g
 yarn setup
 sudo cp /home/pi/Development/react-pi-blocks/scripts/service/react-pi-blocks.service /etc/systemd/system/react-pi-blocks.service
 mkdir -p /home/pi/Development/johnny-five

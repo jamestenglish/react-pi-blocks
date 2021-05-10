@@ -8,7 +8,7 @@ import {
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
-import SENSOR_BLOCK_TYPES from 'customBlocks/sensor/sensor';
+import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
 
 const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map((sensorBlockType) => {
   return { type: sensorBlockType };

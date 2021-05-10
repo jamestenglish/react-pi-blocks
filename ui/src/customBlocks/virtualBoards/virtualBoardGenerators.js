@@ -99,7 +99,7 @@ const createGenerators = ({ inputType, color }) => {
       const codeOut = `(() => {
         const additionalParams = {
           pin: ${pinValue},
-          board: '${codeVariableName}'
+          board: ${codeVariableName}
           
         };
         ${statementsMain}
