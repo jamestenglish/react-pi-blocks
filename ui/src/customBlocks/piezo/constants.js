@@ -13,6 +13,7 @@ export const PIEZO_BLOCK_TYPES = [
   getBlockTypeName('play'),
   getBlockTypeName('note'),
   getBlockTypeName('play_freq'),
+  getBlockTypeName('off'),
 ];
 
 export const BLOCKS_MAP = getBlockTypeMap(PIEZO_BLOCK_TYPES);

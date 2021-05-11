@@ -187,4 +187,37 @@ Blockly.JavaScript[BLOCKS_MAP['play_freq']] = function (blockIn) {
   const codeOut = `${codeVariableName}.frequency(${frequencyValue}, ${durationValue});\n`;
   return codeOut;
 };
+
+Blockly.Blocks[BLOCKS_MAP['off']] = {
+  init: function () {
+    this.appendDummyInput(inputType)
+      .appendField('Make')
+      .appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        inputType
+      );
+    this.appendDummyInput().appendField('turn off');
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(color);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  },
+};
+
+Blockly.JavaScript[BLOCKS_MAP['off']] = function (blockIn) {
+  const variableFieldValue = blockIn.getFieldValue(inputType);
+
+  if (isNullOrEmpty(variableFieldValue)) {
+    return '';
+  }
+
+  const codeVariableName = Blockly.JavaScript.variableDB_.getName(
+    variableFieldValue,
+    Blockly.Variables.NAME_TYPE
+  );
+  const codeOut = `${codeVariableName}.off();\n`;
+  return codeOut;
+};
 console.groupEnd();
