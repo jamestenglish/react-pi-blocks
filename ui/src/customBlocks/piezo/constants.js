@@ -16,7 +16,7 @@ export const PIEZO_BLOCK_TYPES = [
 
 export const BLOCKS_MAP = getBlockTypeMap(PIEZO_BLOCK_TYPES);
 
-export const piezeNotesMap = {
+const piezeNotesMapOrig = {
   // from johnny-five/lib/piezo.js
   c0: 16,
   'c#0': 17,
@@ -127,3 +127,13 @@ export const piezeNotesMap = {
   'a#8': 7459,
   b8: 7902,
 };
+
+export const piezeNotesMap = Object.keys(piezeNotesMapOrig).reduce(
+  (acc, cur) => {
+    return {
+      ...acc,
+      [cur]: piezeNotesMapOrig[cur] * 100,
+    };
+  },
+  {}
+);
