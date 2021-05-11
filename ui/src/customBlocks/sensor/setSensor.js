@@ -130,6 +130,7 @@ Blockly.Blocks[SENSOR_BLOCKS_MAP.set] = {
           .appendField(new Blockly.FieldNumber(1, 1, 1023), thresholdFieldName)
           .appendField(' and Frequency:')
           .appendField(new Blockly.FieldNumber(25, 1), frequencyFieldName) // ;
+          .appendField('milliseconds')
           // this.appendDummyInput(`${CUSTOM_OPTIONS_DUMMY_INPUT}_A`)
           .appendField(' Use GPIO?')
           .appendField(

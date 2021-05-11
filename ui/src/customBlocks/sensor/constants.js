@@ -1,6 +1,6 @@
 import { SENSOR, COLORS } from 'constants/blockConstants';
 import createGetBlockTypeName from 'helpers/createGetBlockTypeName';
-import getSensorBlockTypeMap from 'helpers/getSensorBlockTypeMap';
+import getBlockTypeMap from 'helpers/getBlockTypeMap';
 
 export const inputType = SENSOR;
 export const color = COLORS[SENSOR];
@@ -19,4 +19,4 @@ export const SENSOR_BLOCK_TYPES = [
   getBlockTypeName('get_raw'),
 ];
 
-export const SENSOR_BLOCKS_MAP = getSensorBlockTypeMap(SENSOR_BLOCK_TYPES);
+export const SENSOR_BLOCKS_MAP = getBlockTypeMap(SENSOR_BLOCK_TYPES);

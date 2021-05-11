@@ -4,15 +4,24 @@ import {
   PIN,
   PCF8591,
   SENSOR,
+  PIEZO,
   COLORS,
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
 import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
+import { PIEZO_BLOCK_TYPES } from 'customBlocks/piezo/constants';
+import { BUTTON_BLOCK_TYPES } from 'customBlocks/button/constants';
 
-const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map((sensorBlockType) => {
-  return { type: sensorBlockType };
-});
+const blockTypeMapper = (blockType) => {
+  return { type: blockType };
+};
+
+const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map(blockTypeMapper);
+
+const PIEZO_BLOCKS = PIEZO_BLOCK_TYPES.map(blockTypeMapper);
+
+const BUTTON_BLOCKS = BUTTON_BLOCK_TYPES.map(blockTypeMapper);
 
 const GPIOpinBlocks = GPIOPins.map((option) => {
   const [name] = option;
@@ -31,6 +40,67 @@ const PCF8591PinBlocks = PCF8591Pins.map((name) => {
 });
 
 const toolboxCategories = [
+  {
+    name: 'Required',
+    colour: '#A5995B',
+    blocks: [
+      {
+        type: 'board_setup',
+      },
+    ],
+  },
+  {
+    name: 'Pins',
+    colour: COLORS[PIN],
+    blocks: GPIOpinBlocks,
+  },
+
+  {
+    name: 'LED',
+    colour: COLORS[LED],
+    blocks: [
+      {
+        type: 'set_led',
+      },
+      {
+        type: 'get_led',
+      },
+      {
+        type: 'led_on_off',
+      },
+    ],
+  },
+  {
+    name: 'Piezo',
+    colour: COLORS[PIEZO],
+    blocks: [...PIEZO_BLOCKS],
+  },
+  {
+    name: 'Button',
+    colour: COLORS[BUTTON],
+    blocks: [...BUTTON_BLOCKS],
+  },
+  {
+    name: 'PCF9581 (ADC)',
+    colour: COLORS[PCF8591],
+    blocks: [
+      {
+        type: 'set_PCF8591',
+      },
+      {
+        type: 'get_PCF8591',
+      },
+      {
+        type: 'use_PCF8591',
+      },
+      ...PCF8591PinBlocks,
+    ],
+  },
+  {
+    name: 'Sensor',
+    colour: COLORS[SENSOR],
+    blocks: [...SENSOR_BLOCKS],
+  },
   {
     name: 'Variables',
     custom: 'VARIABLE',
@@ -51,7 +121,7 @@ const toolboxCategories = [
   },
   {
     name: 'Math',
-    colour: '#5CA65C',
+    colour: '#5B67A5',
     blocks: [
       { type: 'math_number' },
 
@@ -80,7 +150,7 @@ const toolboxCategories = [
 
   {
     name: 'Text',
-    colour: '#5CA65C',
+    colour: '#5ba58c',
     blocks: [
       {
         type: 'text',
@@ -127,76 +197,9 @@ const toolboxCategories = [
     ],
   },
   {
-    name: 'Required',
-    colour: '#5CA699',
-    blocks: [
-      {
-        type: 'board_setup',
-      },
-    ],
-  },
-  {
-    name: 'Pins',
-    colour: COLORS[PIN],
-    blocks: GPIOpinBlocks,
-  },
-
-  {
-    name: 'LED',
-    colour: COLORS[LED],
-    blocks: [
-      {
-        type: 'set_led',
-      },
-      {
-        type: 'get_led',
-      },
-      {
-        type: 'led_on_off',
-      },
-    ],
-  },
-  {
-    name: 'Button',
-    colour: COLORS[BUTTON],
-    blocks: [
-      {
-        type: 'set_button',
-      },
-      {
-        type: 'get_button',
-      },
-      {
-        type: 'button_on_off',
-      },
-    ],
-  },
-  {
-    name: 'PCF9581 (ADC)',
-    colour: COLORS[PCF8591],
-    blocks: [
-      {
-        type: 'set_PCF8591',
-      },
-      {
-        type: 'get_PCF8591',
-      },
-      {
-        type: 'use_PCF8591',
-      },
-      ...PCF8591PinBlocks,
-    ],
-  },
-  {
-    name: 'Sensor',
-    colour: COLORS[SENSOR],
-    blocks: [...SENSOR_BLOCKS],
-  },
-  {
     name: 'Lists',
     colour: '#745ba5',
     blocks: [
-      { type: 'lists_create_with' },
       { type: 'lists_create_with' },
       { type: 'lists_repeat' },
       { type: 'lists_length' },
@@ -211,5 +214,4 @@ const toolboxCategories = [
   },
 ];
 
-console.log({ toolboxCategories });
 export default toolboxCategories;

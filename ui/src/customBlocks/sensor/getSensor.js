@@ -17,8 +17,6 @@ import {
 import createGetSensorGenerators from './createGetSensorGenerators';
 
 const ancestorBlockType = getBlockTypeName('on_change');
-console.log('-----======------');
-console.log({ ancestorBlockType });
 
 const { code, block } = createGetSensorGenerators({
   inputType,
@@ -107,7 +105,7 @@ Blockly.Blocks[SENSOR_BLOCKS_MAP['boolean_at']] = block.get({
 Blockly.JavaScript[SENSOR_BLOCKS_MAP['boolean_at']] = code.get({
   propertyName: 'booleanAt',
   fields: booleanAtFields,
-  codeWrapper: (codeIn) => codeIn,
+  codeWrapper: (codeIn) => `${codeIn};\n`,
 });
 
 Blockly.Blocks[SENSOR_BLOCKS_MAP['get_boolean']] = block.get({

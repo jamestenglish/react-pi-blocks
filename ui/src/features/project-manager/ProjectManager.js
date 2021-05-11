@@ -67,7 +67,7 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
 
   const handleListItemClick = useCallback(
     (event, file) => {
-      console.group('handleListItemClick');
+      console.group('ProjectManager.handleListItemClick');
       console.log({ file });
       console.groupEnd();
       handleProjectNameSelection(file);
@@ -85,7 +85,7 @@ const ProjectManager = ({ handleProjectNameSelection }) => {
     socket.emit('getFiles');
 
     socket.on('files', (data) => {
-      console.group('on files');
+      console.group('ProjectManager.on files');
       console.log({ data });
       console.groupEnd();
       setFiles(data);

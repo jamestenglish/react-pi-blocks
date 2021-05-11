@@ -62,7 +62,7 @@ const createGenerators = ({ inputType, color }) => {
         new Blockly.FieldVariable(variableName, null, [inputType], inputType),
         inputType
       );
-      this.appendDummyInput().appendField('with PIN');
+      this.appendDummyInput().appendField('with ADC pin');
       this.appendValueInput(pinType).setCheck(pinType);
       this.appendStatementInput(`${inputType}_STMT`).setCheck(null);
 

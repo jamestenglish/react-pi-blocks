@@ -13,7 +13,7 @@ const workspaceDidChangeInner = (
   // eslint-disable-next-line no-param-reassign
   workspaceRef.current = workspace;
   if (!initializedRef.current && workspace) {
-    console.group('initialization');
+    console.group('workspaceDidChangeInner.initialization');
     console.log('Initializing Workspace');
     console.groupEnd();
   }
@@ -42,7 +42,7 @@ const workspaceDidChangeInner = (
     console.groupEnd();
   }
   if (xml !== newXml || !initializedRef.current) {
-    console.group('xml changed');
+    console.group('workspaceDidChangerInner.xml changed');
     console.log('setting state');
     console.groupEnd();
     handleToolboxChange({ code: prettierCode, xml: newXml });
