@@ -36,7 +36,7 @@ console.group('piezo');
 console.log({ BLOCKS_MAP });
 Blockly.Blocks[BLOCKS_MAP['set']] = {
   init: block.setGenerator({
-    useText: 'be used for piezo named',
+    useText: 'used for piezo named',
     variableName,
   }),
 };
@@ -142,12 +142,11 @@ Blockly.Blocks[BLOCKS_MAP['play_freq']] = {
         new Blockly.FieldVariable(variableName, null, [inputType], inputType),
         inputType
       );
-    this.appendDummyInput().appendField('play frequency');
+    this.appendDummyInput().appendField(' play at frequency:');
     this.appendValueInput(FREQUENCY_FIELD).setCheck('Number');
-    this.appendDummyInput().appendField('for');
-    this.appendValueInput(DURATION_IN_MS_FIELD)
-      .setCheck('Number')
-      .appendField('milliseconds');
+    this.appendDummyInput().appendField('for:');
+    this.appendValueInput(DURATION_IN_MS_FIELD).setCheck('Number');
+    this.appendDummyInput().appendField('milliseconds');
 
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
