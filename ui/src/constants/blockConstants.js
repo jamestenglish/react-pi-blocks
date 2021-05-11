@@ -12,5 +12,5 @@ export const COLORS = {
   [PIN]: '#9CDEF6',
   [PCF8591]: '#FCA481',
   [SENSOR]: '#A392E9',
-  [PIEZO]: '#123456',
+  [PIEZO]: '#749DC4',
 };

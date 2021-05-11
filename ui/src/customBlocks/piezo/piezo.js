@@ -29,6 +29,8 @@ NOTE_OPTIONS.push(['Silence', 'null']);
 
 const NOTE_FIELD = 'PIEZO_NOTE_FIELD';
 const NOTE_LENGTH_FIELD = 'PIEZO_NOTE_LENGTH_FIELD';
+const FREQUENCY_FIELD = 'PIEZO_FREQUENCY_FIELD';
+const DURATION_IN_MS_FIELD = 'PIEZO_DURATION_IN_MS';
 
 console.group('piezo');
 console.log({ BLOCKS_MAP });
@@ -132,4 +134,57 @@ Blockly.JavaScript[BLOCKS_MAP['note']] = function (blockIn) {
   return codeOut;
 };
 
+Blockly.Blocks[BLOCKS_MAP['play_freq']] = {
+  init: function () {
+    this.appendDummyInput(inputType)
+      .appendField('Make')
+      .appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        inputType
+      );
+    this.appendDummyInput().appendField('play frequency');
+    this.appendValueInput(FREQUENCY_FIELD).setCheck('Number');
+    this.appendDummyInput().appendField('for');
+    this.appendValueInput(DURATION_IN_MS_FIELD)
+      .setCheck('Number')
+      .appendField('milliseconds');
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(color);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  },
+};
+
+Blockly.JavaScript[BLOCKS_MAP['play_freq']] = function (blockIn) {
+  const frequencyValue = Blockly.JavaScript.valueToCode(
+    blockIn,
+    FREQUENCY_FIELD,
+    Blockly.JavaScript.ORDER_ATOMIC
+  );
+  const durationValue = Blockly.JavaScript.valueToCode(
+    blockIn,
+    DURATION_IN_MS_FIELD,
+    Blockly.JavaScript.ORDER_ATOMIC
+  );
+
+  const variableFieldValue = blockIn.getFieldValue(inputType);
+
+  if (
+    isNullOrEmpty(variableFieldValue) ||
+    isNullOrEmpty(frequencyValue) ||
+    isNullOrEmpty(durationValue)
+  ) {
+    return '';
+  }
+
+  const codeVariableName = Blockly.JavaScript.variableDB_.getName(
+    variableFieldValue,
+    Blockly.Variables.NAME_TYPE
+  );
+  const codeOut = `${codeVariableName}.frequency(${frequencyValue}, ${durationValue});\n`;
+  return codeOut;
+};
 console.groupEnd();
