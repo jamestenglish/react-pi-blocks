@@ -136,7 +136,7 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
         workspaceDidChange={workspaceDidChange}
         onImportXmlError={onImportXmlError}
         processToolboxCategory={(toolboxCategory) => {
-          console.group('processToolboxCategory');
+          console.group('BlocklyToolbox.processToolboxCategory');
           console.log({ toolboxCategory });
           console.groupEnd();
           return toolboxCategory;

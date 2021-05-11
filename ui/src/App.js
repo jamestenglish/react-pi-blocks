@@ -7,6 +7,7 @@ import './customBlocks/button/button';
 import './customBlocks/GPIOpins/pins';
 import './customBlocks/virtualBoards/PCF8591';
 import './customBlocks/sensor/sensor';
+import './customBlocks/piezo/piezo';
 
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -20,6 +21,25 @@ import Terminal from './Terminal';
 import ProjectManager from 'features/project-manager/ProjectManager';
 
 import { SocketContext, socket } from 'socket-config/socket';
+import createLogHelper from 'helpers/createLogHelper';
+
+createLogHelper([
+  'createGetSensorGenerators',
+  'sensor.onChange',
+  'App',
+  'ProjectManager',
+  'ProjectListItem',
+  'Terminal',
+  'ProjectManager.on files',
+  'ProjectManager.handleListItemClick',
+  'App.getFile Effect',
+  'App.on file',
+  'BlocklyToolbox.processToolboxCategory',
+  'workspaceDidChangeInner.initialization',
+  'workspaceDidChangerInner.xml changed',
+  'createGetSensorGenerators.hasSurroundedAncestor',
+  'BlocklyToolbox',
+]);
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +100,7 @@ const App = () => {
 
   useEffect(() => {
     if (projectName !== null) {
-      console.group('getFile Effect');
+      console.group('App.getFile Effect');
       console.log({ projectName });
       console.groupEnd();
       socket.emit('getFile', { fileName: projectName });
@@ -93,7 +113,7 @@ const App = () => {
     });
 
     socket.on('file', (file) => {
-      console.group('on file');
+      console.group('App.on file');
       if (file === '') {
         console.log('blank file');
         setToolboxState({ code: '', xml: initialXml });

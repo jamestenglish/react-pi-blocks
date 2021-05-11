@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import Blockly from 'blockly';
-import jsBlockly from 'blockly/javascript';
+import 'blockly/javascript';
 
 let pins = [];
 
@@ -33,9 +33,5 @@ const pinLimiter = (event, workspace) => {
     });
   }
 };
-const initBlocks = () => {
-  console.log({ Blockly, jsBlockly });
-};
-export { initBlocks };
 
 export default pinLimiter;

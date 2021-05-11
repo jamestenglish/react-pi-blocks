@@ -4,15 +4,24 @@ import {
   PIN,
   PCF8591,
   SENSOR,
+  PIEZO,
   COLORS,
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
 import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
+import { PIEZO_BLOCK_TYPES } from 'customBlocks/piezo/constants';
+import { BUTTON_BLOCK_TYPES } from 'customBlocks/button/constants';
 
-const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map((sensorBlockType) => {
-  return { type: sensorBlockType };
-});
+const blockTypeMapper = (blockType) => {
+  return { type: blockType };
+};
+
+const SENSOR_BLOCKS = SENSOR_BLOCK_TYPES.map(blockTypeMapper);
+
+const PIEZO_BLOCKS = PIEZO_BLOCK_TYPES.map(blockTypeMapper);
+
+const BUTTON_BLOCKS = BUTTON_BLOCK_TYPES.map(blockTypeMapper);
 
 const GPIOpinBlocks = GPIOPins.map((option) => {
   const [name] = option;
@@ -159,17 +168,7 @@ const toolboxCategories = [
   {
     name: 'Button',
     colour: COLORS[BUTTON],
-    blocks: [
-      {
-        type: 'set_button',
-      },
-      {
-        type: 'get_button',
-      },
-      {
-        type: 'button_on_off',
-      },
-    ],
+    blocks: [...BUTTON_BLOCKS],
   },
   {
     name: 'PCF9581 (ADC)',
@@ -193,10 +192,14 @@ const toolboxCategories = [
     blocks: [...SENSOR_BLOCKS],
   },
   {
+    name: 'Piezo',
+    colour: COLORS[PIEZO],
+    blocks: [...PIEZO_BLOCKS],
+  },
+  {
     name: 'Lists',
     colour: '#745ba5',
     blocks: [
-      { type: 'lists_create_with' },
       { type: 'lists_create_with' },
       { type: 'lists_repeat' },
       { type: 'lists_length' },
@@ -211,5 +214,4 @@ const toolboxCategories = [
   },
 ];
 
-console.log({ toolboxCategories });
 export default toolboxCategories;

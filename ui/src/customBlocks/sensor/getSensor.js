@@ -17,8 +17,6 @@ import {
 import createGetSensorGenerators from './createGetSensorGenerators';
 
 const ancestorBlockType = getBlockTypeName('on_change');
-console.log('-----======------');
-console.log({ ancestorBlockType });
 
 const { code, block } = createGetSensorGenerators({
   inputType,

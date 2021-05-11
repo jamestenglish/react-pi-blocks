@@ -4,6 +4,7 @@ export const PIN = 'PIN';
 export const PCF8591 = 'PCF8591';
 export const PIN_PCF8591 = 'PIN_PCF8591';
 export const SENSOR = 'SENSOR';
+export const PIEZO = 'PIEZO';
 
 export const COLORS = {
   [LED]: '#6CB0F2',
@@ -11,4 +12,5 @@ export const COLORS = {
   [PIN]: '#9CDEF6',
   [PCF8591]: '#FCA481',
   [SENSOR]: '#A392E9',
+  [PIEZO]: '#123456',
 };

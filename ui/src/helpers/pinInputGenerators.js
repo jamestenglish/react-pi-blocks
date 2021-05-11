@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable arrow-body-style */
 import Blockly from 'blockly';
-import jsBlockly from 'blockly/javascript';
+import 'blockly/javascript';
 
 import { PIN } from 'constants/blockConstants';
 
@@ -28,22 +28,22 @@ const createGenerators = ({ inputType, color = 230 }) => {
   };
 
   const pinInputCodeSetGenerator = ({ constructorName }) => {
-    return function (block) {
+    return function (blockIn) {
       const pinValue = Blockly.JavaScript.valueToCode(
-        block,
+        blockIn,
         PIN,
         Blockly.JavaScript.ORDER_ATOMIC
       );
       const codeVariableName = Blockly.JavaScript.variableDB_.getName(
-        block.getFieldValue(inputType),
+        blockIn.getFieldValue(inputType),
         Blockly.Variables.NAME_TYPE
       );
 
       if (isNullOrEmpty(pinValue) || isNullOrEmpty(codeVariableName)) {
         return '';
       }
-      const code = `${codeVariableName} = new ${constructorName}(${pinValue});\n`;
-      return code;
+      const codeOut = `${codeVariableName} = new ${constructorName}(${pinValue});\n`;
+      return codeOut;
     };
   };
 
@@ -130,12 +130,5 @@ const createGenerators = ({ inputType, color = 230 }) => {
     },
   };
 };
-
-const initBlocks = () => {
-  console.log({ Blockly, jsBlockly });
-};
-initBlocks();
-
-export { initBlocks };
 
 export default createGenerators;

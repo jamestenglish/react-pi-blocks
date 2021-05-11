@@ -19,7 +19,7 @@ const doSkipOnChange = (event) => {
 const getFirstSurroundedAncestorByType = (block, surroundAncestorType) => {
   const initialSurroundParent = block.getSurroundParent();
   let surroundParent = initialSurroundParent;
-  console.group('hasSurroundedAncestor');
+  console.group('createGetSensorGenerators.hasSurroundedAncestor');
   while (surroundParent != null) {
     console.log({
       surroundParent,
@@ -67,7 +67,7 @@ const createGetSensorGenerators = ({ inputType, color, ancestorBlockType }) => {
         if (doSkipOnChange(event)) {
           return;
         }
-        console.group('onChange');
+        console.group('sensor.onChange');
         const surroundAncestor = getFirstSurroundedAncestorByType(
           this,
           ancestorBlockType

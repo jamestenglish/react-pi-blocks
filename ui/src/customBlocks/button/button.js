@@ -6,36 +6,36 @@
 /* eslint-disable dot-notation */
 import Blockly from 'blockly';
 import 'blockly/javascript';
-import { BUTTON, COLORS } from 'constants/blockConstants';
 
 import createGenerators from 'helpers/pinInputGenerators';
 
-const inputType = BUTTON;
-const color = COLORS[BUTTON];
-const variableName = 'Button Name';
+import { inputType, color, variableName, BLOCKS_MAP } from './constants';
+
+const STATEMENT_NAME = 'BUTTON_STMT';
+const BUTTON_COMMAND = 'BUTTON_COMMAND';
 
 const { code, block } = createGenerators({ inputType, color });
 
-Blockly.Blocks['set_button'] = {
+Blockly.Blocks[BLOCKS_MAP['set']] = {
   init: block.setGenerator({
     useText: 'be used for Button named',
     variableName,
   }),
 };
 
-Blockly.JavaScript['set_button'] = code.setGenerator({
+Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
   constructorName: 'five.Button',
 });
 
-Blockly.Blocks['get_button'] = {
+Blockly.Blocks[BLOCKS_MAP['get']] = {
   init: block.getGenerator({
     variableName,
   }),
 };
 
-Blockly.JavaScript['get_button'] = code.getGenerator();
+Blockly.JavaScript[BLOCKS_MAP['get']] = code.getGenerator();
 
-Blockly.Blocks['button_on_off'] = {
+Blockly.Blocks[BLOCKS_MAP['on_off']] = {
   init: function () {
     this.appendDummyInput().appendField('When');
     this.appendDummyInput(inputType).appendField(
@@ -54,9 +54,9 @@ Blockly.Blocks['button_on_off'] = {
           ]
           // this.validate
         ),
-        'BUTTON_COMMAND'
+        BUTTON_COMMAND
       );
-    this.appendStatementInput('BUTTON_STMT').setCheck(null);
+    this.appendStatementInput(STATEMENT_NAME).setCheck(null);
 
     this.setColour(color);
     this.setInputsInline(true);
@@ -97,12 +97,12 @@ Blockly.Blocks['button_on_off'] = {
   // },
 };
 
-Blockly.JavaScript['button_on_off'] = function (blockIn) {
-  const buttonCommand = blockIn.getFieldValue('BUTTON_COMMAND');
+Blockly.JavaScript[BLOCKS_MAP['on_off']] = function (blockIn) {
+  const buttonCommand = blockIn.getFieldValue(BUTTON_COMMAND);
 
   const statementsMain = Blockly.JavaScript.statementToCode(
     blockIn,
-    'BUTTON_STMT'
+    STATEMENT_NAME
   );
 
   const codeVariableName = Blockly.JavaScript.variableDB_.getName(
