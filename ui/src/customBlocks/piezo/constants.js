@@ -9,7 +9,7 @@ export const variableName = 'Sensor Name';
 export const getBlockTypeName = createGetBlockTypeName(inputType);
 
 export const PIEZO_BLOCK_TYPES = [
-  getBlockTypeName('set'),
+  getBlockTypeName('makePin'),
   getBlockTypeName('play'),
   getBlockTypeName('note'),
   getBlockTypeName('play_freq'),

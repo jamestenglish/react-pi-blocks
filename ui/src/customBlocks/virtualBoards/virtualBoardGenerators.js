@@ -6,6 +6,7 @@ import Blockly from 'blockly';
 import 'blockly/javascript';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
 
+// TODO JTE square this w/ regular pin generators
 const createGenerators = ({ inputType, color }) => {
   const virtualBoardBlockSetGenerator = ({ variableName, useText }) =>
     function () {

@@ -33,3 +33,11 @@ ps -ef | grep "sudo node /home/pi/Development/johnny-five/index.js" | grep "root
 |Trimpot 10K Ohm with Knob|https://www.sparkfun.com/products/9806|
 
 
+## TODO
+- package.json for j5 project
+- graphs
+- selectable workspace
+- clear terminal
+- wait
+- motor
+- servos

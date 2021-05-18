@@ -1,3 +1,5 @@
+import { GPIO_WRAPPER_NAME } from 'constants/blockConstants';
+
 const GPIOPins = [
   ['#4', 'P1-7'],
   ['#5', 'P1-29'],
@@ -24,7 +26,8 @@ const gpioMap = GPIOPins.reduce((prev, curr) => {
   };
 }, {});
 
-const getGPIOBlockName = (name) => `pin_${name.replaceAll('#', '')}`;
+const getGPIOBlockName = (name) =>
+  `pin_${name.replaceAll('#', '')}_${GPIO_WRAPPER_NAME}`;
 
 export default GPIOPins;
 

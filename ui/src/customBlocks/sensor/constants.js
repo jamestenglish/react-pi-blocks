@@ -9,7 +9,7 @@ export const variableName = 'Sensor Name';
 export const getBlockTypeName = createGetBlockTypeName(inputType);
 
 export const SENSOR_BLOCK_TYPES = [
-  getBlockTypeName('set'),
+  getBlockTypeName('makePin'),
   getBlockTypeName('on_change'),
   getBlockTypeName('get_value'),
   getBlockTypeName('get_scaled'),

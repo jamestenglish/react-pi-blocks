@@ -7,7 +7,6 @@ import ReactBlockly from 'react-blockly';
 import Blockly from 'blockly';
 import { LED, BUTTON, SENSOR, PCF8591, PIEZO } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
-import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
 
 import toolboxCategories from './toolboxCategories';
 
@@ -22,18 +21,8 @@ const GPIOPinBlocksLimiters = GPIOPins.reduce((acc, option) => {
   };
 }, {});
 
-const PCF8591PinBlocksLimiters = PCF8591Pins.reduce((acc, name) => {
-  const key = getPCF8591PinBlockName(name);
-
-  return {
-    ...acc,
-    [key]: 1,
-  };
-}, {});
-
 const blockLimiters = {
   ...GPIOPinBlocksLimiters,
-  ...PCF8591PinBlocksLimiters,
 };
 
 const onImportXmlError = (e) => {

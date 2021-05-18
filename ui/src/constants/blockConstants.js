@@ -6,6 +6,11 @@ export const PIN_PCF8591 = 'PIN_PCF8591';
 export const SENSOR = 'SENSOR';
 export const PIEZO = 'PIEZO';
 
+export const PIN_WRAPPER_NAME = 'pin_wrapper';
+export const GPIO_WRAPPER_NAME = 'gpio_wrapper';
+export const BOARD_FIELD_NAME = 'BOARD_FIELD';
+export const PIN_FIELD_NAME = 'PIN_FIELD';
+
 export const COLORS = {
   [LED]: '#6CB0F2',
   [BUTTON]: '#6549DA',
@@ -14,3 +19,5 @@ export const COLORS = {
   [SENSOR]: '#A392E9',
   [PIEZO]: '#749DC4',
 };
+
+export const PIN_TYPES = [PIN, PIN_PCF8591];

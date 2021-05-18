@@ -5,7 +5,7 @@
 import Blockly from 'blockly';
 import 'blockly/javascript';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
-import createGenerators from 'helpers/pinInputGenerators';
+import createGenerators from 'customBlocks/generators/createGenerators';
 
 import {
   inputType,
@@ -34,17 +34,18 @@ const DURATION_IN_MS_FIELD = 'PIEZO_DURATION_IN_MS';
 
 console.group('piezo');
 console.log({ BLOCKS_MAP });
-Blockly.Blocks[BLOCKS_MAP['set']] = {
-  init: block.setGenerator({
+Blockly.Blocks[BLOCKS_MAP['makePin']] = {
+  init: block.makePin({
     useText: 'used for piezo named',
     variableName,
   }),
 };
 
-Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
+Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Piezo',
 });
 
+// TODO JTE refactor this to command
 Blockly.Blocks[BLOCKS_MAP['play']] = {
   init: function () {
     this.appendDummyInput().appendField('With');
@@ -93,7 +94,7 @@ Blockly.JavaScript[BLOCKS_MAP['play']] = function (blockIn) {
   );
   const codeOut = `
     ${codeVariableName}.play({
-        temp: ${piezoTempo},
+        tempo: ${piezoTempo},
         song: [${statementsMain}]
     });
     `;

@@ -5,59 +5,67 @@
 import Blockly from 'blockly';
 import 'blockly/javascript';
 
-import { PCF8591, PIN_PCF8591, COLORS } from 'constants/blockConstants';
-import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
+import PCF8591Pins from 'constants/PCF8591Pins';
+import {
+  PIN_PCF8591,
+  PIN_WRAPPER_NAME,
+  PIN_FIELD_NAME,
+  BOARD_FIELD_NAME,
+} from 'constants/blockConstants';
+import { inputType, color, variableName, BLOCKS_MAP } from './constants';
 
 import createGenerators from './virtualBoardGenerators';
 
-const inputType = PCF8591;
-const color = COLORS[PCF8591];
-
-const variableName = 'PCF9581 (ADC) Name';
-const pinType = PIN_PCF8591;
 const useText = 'Create PCF8591 (ADC) named:';
 const expanderName = 'PCF8591';
 
-PCF8591Pins.forEach((pinName) => {
-  const blockName = getPCF8591PinBlockName(pinName);
-
-  Blockly.Blocks[blockName] = {
-    init: function () {
-      this.appendDummyInput().appendField(`PCF8591 Pin ${pinName}`);
-      this.setOutput(true, pinType);
-      this.setColour(color);
-      this.setTooltip('');
-      this.setHelpUrl('');
-    },
-  };
-
-  Blockly.JavaScript[blockName] = function () {
-    const code = `'${pinName}'`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-});
+const pinOptions = PCF8591Pins.map((value) => [value, value]);
+const pinOptionsFieldName = PIN_FIELD_NAME;
+const boardFieldName = BOARD_FIELD_NAME;
 
 const { code, block } = createGenerators({ inputType, color });
 
-Blockly.Blocks['set_PCF8591'] = {
+Blockly.Blocks[BLOCKS_MAP['set']] = {
   init: block.setGenerator({
     useText,
     variableName,
   }),
 };
 
-Blockly.JavaScript['set_PCF8591'] = code.setGenerator({
+Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
   expanderName,
 });
 
-Blockly.Blocks['get_PCF8591'] = {
+Blockly.Blocks[BLOCKS_MAP['get']] = {
   init: block.getGenerator({ variableName }),
 };
 
-Blockly.JavaScript['get_PCF8591'] = code.getGenerator();
+Blockly.JavaScript[BLOCKS_MAP['get']] = code.getGenerator();
 
-Blockly.Blocks['use_PCF8591'] = {
-  init: block.useGenerator({ variableName, pinType }),
+Blockly.Blocks[BLOCKS_MAP[`get_${PIN_WRAPPER_NAME}`]] = {
+  init: function () {
+    console.log('======\n============\n---------');
+    console.log({ boardFieldName, pinOptionsFieldName });
+    this.appendDummyInput()
+      .appendField('With ')
+      .appendField(
+        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+        boardFieldName
+      );
+    this.appendDummyInput()
+      .appendField('use pin ')
+      .appendField(new Blockly.FieldDropdown(pinOptions), pinOptionsFieldName);
+    this.setOutput(true, PIN_PCF8591);
+    this.setColour(color);
+  },
 };
 
-Blockly.JavaScript['use_PCF8591'] = code.useGenerator({ pinType });
+Blockly.JavaScript[BLOCKS_MAP[`get_${PIN_WRAPPER_NAME}`]] = function (blockIn) {
+  const codeVariableName = Blockly.JavaScript.variableDB_.getName(
+    blockIn.getFieldValue(boardFieldName),
+    Blockly.Variables.NAME_TYPE
+  );
+  const pinValue = blockIn.getFieldValue(pinOptionsFieldName);
+  const codeIn = `{board: ${codeVariableName}, pin: "${pinValue}" }`;
+  return [codeIn, Blockly.JavaScript.ORDER_ATOMIC];
+};

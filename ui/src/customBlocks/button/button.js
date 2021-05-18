@@ -7,7 +7,7 @@
 import Blockly from 'blockly';
 import 'blockly/javascript';
 
-import createGenerators from 'helpers/pinInputGenerators';
+import createGenerators from 'customBlocks/generators/createGenerators';
 
 import { inputType, color, variableName, BLOCKS_MAP } from './constants';
 
@@ -16,25 +16,26 @@ const BUTTON_COMMAND = 'BUTTON_COMMAND';
 
 const { code, block } = createGenerators({ inputType, color });
 
-Blockly.Blocks[BLOCKS_MAP['set']] = {
-  init: block.setGenerator({
-    useText: 'be used for Button named',
+Blockly.Blocks[BLOCKS_MAP['makePin']] = {
+  init: block.makePin({
+    useText: 'used for Button named',
     variableName,
   }),
 };
 
-Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
+Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Button',
 });
 
 Blockly.Blocks[BLOCKS_MAP['get']] = {
-  init: block.getGenerator({
+  init: block.getVariable({
     variableName,
   }),
 };
 
-Blockly.JavaScript[BLOCKS_MAP['get']] = code.getGenerator();
+Blockly.JavaScript[BLOCKS_MAP['get']] = code.getVariable();
 
+// TODO JTE REFACTOR THIS
 Blockly.Blocks[BLOCKS_MAP['on_off']] = {
   init: function () {
     this.appendDummyInput().appendField('When');
@@ -42,18 +43,14 @@ Blockly.Blocks[BLOCKS_MAP['on_off']] = {
       new Blockly.FieldVariable(variableName, null, [inputType], inputType),
       inputType
     );
-    // this.appendValueInput('BUTTON').setCheck('BUTTON').appendField('When');
     this.appendDummyInput()
       .appendField('is')
       .appendField(
-        new Blockly.FieldDropdown(
-          [
-            ['Down', 'down'],
-            ['Up', 'up'],
-            ['Hold', 'hold'],
-          ]
-          // this.validate
-        ),
+        new Blockly.FieldDropdown([
+          ['Down', 'down'],
+          ['Up', 'up'],
+          ['Hold', 'hold'],
+        ]),
         BUTTON_COMMAND
       );
     this.appendStatementInput(STATEMENT_NAME).setCheck(null);

@@ -21,22 +21,7 @@ GPIOPins.forEach((option) => {
   };
 
   Blockly.JavaScript[blockName] = function () {
-    const code = `'${value}'`;
+    const code = `{pin: '${value}'}`;
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
   };
 });
-
-// Blockly.Blocks['pin_a'] = {
-//   init: function () {
-//     this.appendDummyInput().appendField('Pin');
-//     this.setOutput(true, PIN);
-//     this.setColour(230);
-//     this.setTooltip('');
-//     this.setHelpUrl('');
-//   },
-// };
-
-// Blockly.JavaScript['pin_a'] = function () {
-//   const code = `'pin_a'`;
-//   return [code, Blockly.JavaScript.ORDER_ATOMIC];
-// };

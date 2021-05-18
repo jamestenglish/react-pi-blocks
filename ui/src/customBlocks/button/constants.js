@@ -8,7 +8,7 @@ export const color = COLORS[BUTTON];
 export const getBlockTypeName = createGetBlockTypeName(inputType);
 
 export const BUTTON_BLOCK_TYPES = [
-  getBlockTypeName('set'),
+  getBlockTypeName('makePin'),
   getBlockTypeName('get'),
   getBlockTypeName('on_off'),
 ];

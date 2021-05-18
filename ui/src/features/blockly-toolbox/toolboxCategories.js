@@ -8,10 +8,11 @@ import {
   COLORS,
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
-import PCF8591Pins, { getPCF8591PinBlockName } from 'constants/PCF8591Pins';
 import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
 import { PIEZO_BLOCK_TYPES } from 'customBlocks/piezo/constants';
 import { BUTTON_BLOCK_TYPES } from 'customBlocks/button/constants';
+import { PCF8591_BLOCK_TYPES } from 'customBlocks/virtualBoards/constants';
+import { LED_BLOCK_TYPES } from 'customBlocks/led/constants';
 
 const blockTypeMapper = (blockType) => {
   return { type: blockType };
@@ -23,17 +24,13 @@ const PIEZO_BLOCKS = PIEZO_BLOCK_TYPES.map(blockTypeMapper);
 
 const BUTTON_BLOCKS = BUTTON_BLOCK_TYPES.map(blockTypeMapper);
 
+const PCF8591_BLOCKS = PCF8591_BLOCK_TYPES.map(blockTypeMapper);
+
+const LED_BLOCKS = LED_BLOCK_TYPES.map(blockTypeMapper);
+
 const GPIOpinBlocks = GPIOPins.map((option) => {
   const [name] = option;
   const blockName = getGPIOBlockName(name);
-  return {
-    type: blockName,
-  };
-});
-
-const PCF8591PinBlocks = PCF8591Pins.map((name) => {
-  const blockName = getPCF8591PinBlockName(name);
-
   return {
     type: blockName,
   };
@@ -58,17 +55,7 @@ const toolboxCategories = [
   {
     name: 'LED',
     colour: COLORS[LED],
-    blocks: [
-      {
-        type: 'set_led',
-      },
-      {
-        type: 'get_led',
-      },
-      {
-        type: 'led_on_off',
-      },
-    ],
+    blocks: [...LED_BLOCKS],
   },
   {
     name: 'Piezo',
@@ -83,18 +70,7 @@ const toolboxCategories = [
   {
     name: 'PCF9581 (ADC)',
     colour: COLORS[PCF8591],
-    blocks: [
-      {
-        type: 'set_PCF8591',
-      },
-      {
-        type: 'get_PCF8591',
-      },
-      {
-        type: 'use_PCF8591',
-      },
-      ...PCF8591PinBlocks,
-    ],
+    blocks: [...PCF8591_BLOCKS],
   },
   {
     name: 'Sensor',

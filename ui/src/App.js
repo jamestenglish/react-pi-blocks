@@ -1,5 +1,7 @@
 /* eslint-disable import/newline-after-import, import/first, import/order */
 import './App.css';
+import createLogHelper from 'helpers/createLogHelper';
+
 import './customBlocks/custom_Blocks';
 import './customBlocks/required/board_setup_blocks';
 import './customBlocks/led/led';
@@ -21,7 +23,6 @@ import Terminal from './Terminal';
 import ProjectManager from 'features/project-manager/ProjectManager';
 
 import { SocketContext, socket } from 'socket-config/socket';
-import createLogHelper from 'helpers/createLogHelper';
 
 createLogHelper([
   'createGetSensorGenerators',
