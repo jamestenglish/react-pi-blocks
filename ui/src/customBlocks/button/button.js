@@ -12,7 +12,18 @@ import createGenerators from 'customBlocks/generators/createGenerators';
 import { inputType, color, variableName, BLOCKS_MAP } from './constants';
 
 const STATEMENT_NAME = 'BUTTON_STMT';
-const BUTTON_COMMAND = 'BUTTON_COMMAND';
+const BUTTON_COMMAND = `${inputType}_COMMAND`;
+const preText = 'When';
+const dropDownArray = [
+  ['Down', 'down'],
+  ['Up', 'up'],
+  ['Hold', 'hold'],
+];
+
+const additionalInit = (that) =>
+  that.appendStatementInput(STATEMENT_NAME).setCheck(null);
+
+const middleText = 'is';
 
 const { code, block } = createGenerators({ inputType, color });
 
@@ -35,63 +46,14 @@ Blockly.Blocks[BLOCKS_MAP['get']] = {
 
 Blockly.JavaScript[BLOCKS_MAP['get']] = code.getVariable();
 
-// TODO JTE REFACTOR THIS
 Blockly.Blocks[BLOCKS_MAP['on_off']] = {
-  init: function () {
-    this.appendDummyInput().appendField('When');
-    this.appendDummyInput(inputType).appendField(
-      new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-      inputType
-    );
-    this.appendDummyInput()
-      .appendField('is')
-      .appendField(
-        new Blockly.FieldDropdown([
-          ['Down', 'down'],
-          ['Up', 'up'],
-          ['Hold', 'hold'],
-        ]),
-        BUTTON_COMMAND
-      );
-    this.appendStatementInput(STATEMENT_NAME).setCheck(null);
-
-    this.setColour(color);
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  },
-  // mutationToDom: function () {
-  //   var container = document.createElement("mutation");
-  //   var holdInput = this.getFieldValue("BUTTON_COMMAND") === "hold";
-  //   container.setAttribute("hold_input", holdInput);
-  //   return container;
-  // },
-  // domToMutation: function (xmlElement) {
-  //   var holdInput = xmlElement.getAttribute("hold_input") === "true";
-  //   this.updateShape_(holdInput);
-  // },
-
-  // validate: function (newValue) {
-  //   const holdInput = newValue === "hold";
-  //   this.getSourceBlock().updateShape_(holdInput);
-  //   return newValue;
-  // },
-  // updateShape_: function (holdInput) {
-
-  //   const inputExists = this.getInput("WAIT_TIME");
-  //   if (holdInput) {
-  //     if (!inputExists) {
-  //       this.appendDummyInput("WAIT_TIME")
-  //         .appendField("for")
-  //         .appendField(new Blockly.FieldNumber(500, 0), "WAIT_TIME_IN_MS")
-  //         .appendField("milliseconds");
-  //     }
-  //   } else if (inputExists) {
-  //     this.removeInput("WAIT_TIME");
-  //   }
-  // },
+  init: block.runCommand({
+    dropDownArray,
+    variableName,
+    additionalInit,
+    middleText,
+    preText,
+  }),
 };
 
 Blockly.JavaScript[BLOCKS_MAP['on_off']] = function (blockIn) {

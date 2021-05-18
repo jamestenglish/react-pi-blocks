@@ -10,6 +10,8 @@ import isNullOrEmpty from 'helpers/isNullOrEmpty';
 
 const additionalInitDefault = (that) => that;
 
+const DEFAULT_PRE_TEXT = 'Make Pin';
+
 const createGenerators = ({
   inputType,
   color = 230,
@@ -20,9 +22,10 @@ const createGenerators = ({
     useText,
     variableName,
     additionalInit = additionalInitDefault,
+    preText = DEFAULT_PRE_TEXT,
   }) => {
     return function () {
-      this.appendDummyInput().appendField('Make Pin');
+      this.appendDummyInput().appendField(preText);
       this.appendValueInput(pinFieldName).setCheck(pinTypes);
       this.appendDummyInput().appendField(useText);
       this.appendDummyInput(inputType).appendField(

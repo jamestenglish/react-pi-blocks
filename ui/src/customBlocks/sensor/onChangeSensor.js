@@ -8,34 +8,33 @@
 import Blockly from 'blockly';
 import 'blockly/javascript';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
+import createGenerators from 'customBlocks/generators/createGenerators';
 
 import { inputType, color, variableName, SENSOR_BLOCKS_MAP } from './constants';
 
 const SENSOR_EVENT_INPUT = 'SENSOR_EVENT';
 const SENSOR_ON_STATEMENT = 'SENSOR_ON_STATEMENT';
 
-Blockly.Blocks[SENSOR_BLOCKS_MAP['on_change']] = {
-  init: function () {
-    this.appendDummyInput()
-      .appendField('When sensor: ')
-      .appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-    this.appendDummyInput().appendField(
-      new Blockly.FieldDropdown([
-        ['Changes', 'change'],
-        ['Gets any data', 'data'],
-      ]),
-      SENSOR_EVENT_INPUT
-    );
-    this.appendStatementInput(SENSOR_ON_STATEMENT).setCheck(null);
+const { block } = createGenerators({ inputType, color });
 
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(color);
-  },
+const preText = 'When sensor: ';
+const commandFieldName = SENSOR_EVENT_INPUT;
+const dropDownArray = [
+  ['Changes', 'change'],
+  ['Gets any data', 'data'],
+];
+
+const additionalInit = (that) =>
+  that.appendStatementInput(SENSOR_ON_STATEMENT).setCheck(null);
+
+Blockly.Blocks[SENSOR_BLOCKS_MAP['on_change']] = {
+  init: block.runCommand({
+    dropDownArray,
+    variableName,
+    additionalInit,
+    preText,
+    commandFieldName,
+  }),
 };
 
 Blockly.JavaScript[SENSOR_BLOCKS_MAP['on_change']] = function (blockIn) {

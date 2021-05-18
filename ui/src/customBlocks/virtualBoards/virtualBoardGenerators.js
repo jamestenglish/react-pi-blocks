@@ -6,7 +6,6 @@ import Blockly from 'blockly';
 import 'blockly/javascript';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
 
-// TODO JTE square this w/ regular pin generators
 const createGenerators = ({ inputType, color }) => {
   const virtualBoardBlockSetGenerator = ({ variableName, useText }) =>
     function () {
@@ -34,26 +33,6 @@ const createGenerators = ({ inputType, color }) => {
         new five.Expander("${expanderName}")
       );`;
       return codeOut;
-    };
-
-  const virtualBoardBlockGetGenerator = ({ variableName }) =>
-    function () {
-      this.appendDummyInput().appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      this.setOutput(true, inputType);
-      this.setColour(color);
-    };
-
-  const virtualBoardCodeGetGenerator = () =>
-    function (block) {
-      const codeVariableName = Blockly.JavaScript.variableDB_.getName(
-        block.getFieldValue(inputType),
-        Blockly.Variables.NAME_TYPE
-      );
-      const codeOut = codeVariableName;
-      return [codeOut, Blockly.JavaScript.ORDER_ATOMIC];
     };
 
   const virtualBoardBlockUseGenerator = ({ variableName, pinType }) =>
@@ -113,12 +92,10 @@ const createGenerators = ({ inputType, color }) => {
   return {
     block: {
       setGenerator: virtualBoardBlockSetGenerator,
-      getGenerator: virtualBoardBlockGetGenerator,
       useGenerator: virtualBoardBlockUseGenerator,
     },
     code: {
       setGenerator: virtualBoardCodeSetGenerator,
-      getGenerator: virtualBoardCodeGetGenerator,
       useGenerator: virtualBoardCodeUseGenerator,
     },
   };

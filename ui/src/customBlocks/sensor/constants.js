@@ -10,6 +10,7 @@ export const getBlockTypeName = createGetBlockTypeName(inputType);
 
 export const SENSOR_BLOCK_TYPES = [
   getBlockTypeName('makePin'),
+  getBlockTypeName('get'),
   getBlockTypeName('on_change'),
   getBlockTypeName('get_value'),
   getBlockTypeName('get_scaled'),
@@ -19,4 +20,6 @@ export const SENSOR_BLOCK_TYPES = [
   getBlockTypeName('get_raw'),
 ];
 
+console.log('-------\n-------\n-------\n-------\n');
+console.log({ SENSOR_BLOCK_TYPES });
 export const SENSOR_BLOCKS_MAP = getBlockTypeMap(SENSOR_BLOCK_TYPES);

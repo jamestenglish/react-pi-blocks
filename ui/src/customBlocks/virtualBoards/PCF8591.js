@@ -12,6 +12,7 @@ import {
   PIN_FIELD_NAME,
   BOARD_FIELD_NAME,
 } from 'constants/blockConstants';
+import defaultCreateGenerators from 'customBlocks/generators/createGenerators';
 import { inputType, color, variableName, BLOCKS_MAP } from './constants';
 
 import createGenerators from './virtualBoardGenerators';
@@ -24,6 +25,10 @@ const pinOptionsFieldName = PIN_FIELD_NAME;
 const boardFieldName = BOARD_FIELD_NAME;
 
 const { code, block } = createGenerators({ inputType, color });
+const { code: defaultCode, block: defaultBlock } = defaultCreateGenerators({
+  inputType,
+  color,
+});
 
 Blockly.Blocks[BLOCKS_MAP['set']] = {
   init: block.setGenerator({
@@ -37,10 +42,10 @@ Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
 });
 
 Blockly.Blocks[BLOCKS_MAP['get']] = {
-  init: block.getGenerator({ variableName }),
+  init: defaultBlock.getVariable({ variableName }),
 };
 
-Blockly.JavaScript[BLOCKS_MAP['get']] = code.getGenerator();
+Blockly.JavaScript[BLOCKS_MAP['get']] = defaultCode.getVariable();
 
 Blockly.Blocks[BLOCKS_MAP[`get_${PIN_WRAPPER_NAME}`]] = {
   init: function () {

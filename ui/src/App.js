@@ -2,7 +2,7 @@
 import './App.css';
 import createLogHelper from 'helpers/createLogHelper';
 
-import './customBlocks/custom_Blocks';
+// import './customBlocks/custom_Blocks';
 import './customBlocks/required/board_setup_blocks';
 import './customBlocks/led/led';
 import './customBlocks/button/button';

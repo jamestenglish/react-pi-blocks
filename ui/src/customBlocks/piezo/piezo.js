@@ -13,6 +13,7 @@ import {
   BLOCKS_MAP,
   getBlockTypeName,
   piezeNotesMap,
+  piezoStatementColor,
 } from './constants';
 
 const { code, block } = createGenerators({ inputType, color });
@@ -32,11 +33,9 @@ const NOTE_LENGTH_FIELD = 'PIEZO_NOTE_LENGTH_FIELD';
 const FREQUENCY_FIELD = 'PIEZO_FREQUENCY_FIELD';
 const DURATION_IN_MS_FIELD = 'PIEZO_DURATION_IN_MS';
 
-console.group('piezo');
-console.log({ BLOCKS_MAP });
 Blockly.Blocks[BLOCKS_MAP['makePin']] = {
   init: block.makePin({
-    useText: 'used for piezo named',
+    useText: 'used for Piezo named',
     variableName,
   }),
 };
@@ -45,7 +44,14 @@ Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Piezo',
 });
 
-// TODO JTE refactor this to command
+const defaultInit = (that, colorIn = color) => {
+  that.setColour(colorIn);
+  that.setInputsInline(true);
+  that.setPreviousStatement(true, null);
+  that.setNextStatement(true, null);
+  that.setTooltip('');
+  that.setHelpUrl('');
+};
 Blockly.Blocks[BLOCKS_MAP['play']] = {
   init: function () {
     this.appendDummyInput().appendField('With');
@@ -61,12 +67,7 @@ Blockly.Blocks[BLOCKS_MAP['play']] = {
       getBlockTypeName('note'),
     ]);
 
-    this.setColour(color);
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('');
-    this.setHelpUrl('');
+    defaultInit(this, piezoStatementColor);
   },
 };
 
@@ -116,12 +117,7 @@ Blockly.Blocks[BLOCKS_MAP['note']] = {
         NOTE_LENGTH_FIELD
       )
       .appendField('beats');
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(color);
-    this.setTooltip('');
-    this.setHelpUrl('');
+    defaultInit(this, piezoStatementColor);
   },
 };
 Blockly.JavaScript[BLOCKS_MAP['note']] = function (blockIn) {
@@ -149,12 +145,7 @@ Blockly.Blocks[BLOCKS_MAP['play_freq']] = {
     this.appendValueInput(DURATION_IN_MS_FIELD).setCheck('Number');
     this.appendDummyInput().appendField('milliseconds');
 
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(color);
-    this.setTooltip('');
-    this.setHelpUrl('');
+    defaultInit(this);
   },
 };
 
@@ -197,12 +188,7 @@ Blockly.Blocks[BLOCKS_MAP['off']] = {
         inputType
       );
     this.appendDummyInput().appendField('turn off');
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(color);
-    this.setTooltip('');
-    this.setHelpUrl('');
+    defaultInit(this);
   },
 };
 
@@ -220,4 +206,3 @@ Blockly.JavaScript[BLOCKS_MAP['off']] = function (blockIn) {
   const codeOut = `${codeVariableName}.off();\n`;
   return codeOut;
 };
-console.groupEnd();

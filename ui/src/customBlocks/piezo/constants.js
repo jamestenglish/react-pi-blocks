@@ -1,9 +1,10 @@
-import { PIEZO, COLORS } from 'constants/blockConstants';
+import { PIEZO, PIEZO_STATEMENT, COLORS } from 'constants/blockConstants';
 import createGetBlockTypeName from 'helpers/createGetBlockTypeName';
 import getBlockTypeMap from 'helpers/getBlockTypeMap';
 
 export const inputType = PIEZO;
 export const color = COLORS[PIEZO];
+export const piezoStatementColor = COLORS[PIEZO_STATEMENT];
 export const variableName = 'Sensor Name';
 
 export const getBlockTypeName = createGetBlockTypeName(inputType);

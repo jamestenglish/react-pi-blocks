@@ -19,14 +19,6 @@ const isAdditionaParamInput = (additionalParamCommands) => (fieldValue) => {
   return false;
 };
 
-// const getAdditionParamsArray = (obj) => {
-//   const additionalParamsArray = Object.keys(obj).reduce(
-//     (acc, key) => [...acc, [obj[key].dropDownItem, key]],
-//     []
-//   );
-//   return additionalParamsArray;
-// };
-
 const { code, block } = createGenerators({ inputType, color });
 
 const customOptionFieldName = 'LED_COMMAND';
@@ -60,36 +52,6 @@ const standardCommands = [
 
 const additionalParamCommands = [['Blink', 'blink']];
 
-// const additionalParamCommands = {
-//   blink: {
-//     dropDownItem: 'Blink',
-//     beforeText: 'every',
-//     afterText: 'milliseconds',
-//     createFieldBlock: () => new Blockly.FieldNumber(500, 0),
-//     fieldName: 'BLINK_TIME_IN_MS',
-//     codeGenerator: function (blockIn) {
-//       const inputBlock = Blockly.JavaScript.valueToCode(
-//         blockIn,
-//         'LED',
-//         Blockly.JavaScript.ORDER_ATOMIC
-//       );
-//       if (isNullOrEmpty(inputBlock)) {
-//         return '';
-//       }
-//       const variableCodeName = Blockly.JavaScript.variableDB_.getName(
-//         inputBlock,
-//         Blockly.Variables.NAME_TYPE
-//       );
-//       const command = blockIn.getFieldValue(customOptionFieldName);
-//       const arg = blockIn.getFieldValue('BLINK_TIME_IN_MS');
-//       const codeOut = `${variableCodeName}.${command}(${arg});\n`;
-//       return codeOut;
-//     },
-//   },
-// };
-
-// const additionalParamsArray = getAdditionParamsArray(additionalParamCommands);
-
 const createdFieldName = 'BLINK_TIME_IN_MS';
 
 const checkInputsExists = (that) => that.getInput(additionInputFieldName);
@@ -118,55 +80,6 @@ Blockly.Blocks[BLOCKS_MAP['runCommand']] = {
     variableName,
   }),
   ...block.customFieldMethodsGenerator({ customFields }),
-  // mutationToDom: function () {
-  //   const container = document.createElement('mutation');
-  //   const fieldValue = this.getFieldValue(customOptionFieldName);
-
-  //   const hasAdditionalParam = isAdditionaParamInput(
-  //     fieldValue,
-  //     additionalParamsArray
-  //   );
-
-  //   if (hasAdditionalParam) {
-  //     container.setAttribute('additionalParam', fieldValue);
-  //   } else {
-  //     container.setAttribute('additionalParam', '');
-  //   }
-  //   return container;
-  // },
-  // domToMutation: function (xmlElement) {
-  //   const additionalParam = xmlElement.getAttribute('additionalParam');
-  //   this.updateShape_(additionalParam);
-  // },
-
-  // validate: function (newValue) {
-  //   this.getSourceBlock().updateShape_(newValue);
-  //   return newValue;
-  // },
-  // updateShape_: function (additionalParam) {
-  //   const hasAdditionalParam = isAdditionaParamInput(
-  //     additionalParam,
-  //     additionalParamsArray
-  //   );
-  //   const inputExists = this.getInput(additionInputFieldName);
-  //   if (hasAdditionalParam) {
-  //     if (!inputExists) {
-  //       const additionalParamMeta = additionalParamCommands[additionalParam];
-  //       const {
-  //         beforeText,
-  //         createFieldBlock,
-  //         fieldName,
-  //         afterText,
-  //       } = additionalParamMeta;
-  //       this.appendDummyInput(additionInputFieldName)
-  //         .appendField(beforeText)
-  //         .appendField(createFieldBlock(), fieldName)
-  //         .appendField(afterText);
-  //     }
-  //   } else if (inputExists) {
-  //     this.removeInput(additionInputFieldName);
-  //   }
-  // },
 };
 
 const codeGenerator = (blockIn) => {
