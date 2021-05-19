@@ -16,11 +16,9 @@ const { code, block } = createGenerators({
 });
 console.log('-------\n-------\n-------\n-------\n');
 console.log({ SENSOR_BLOCKS_MAP });
-Blockly.Blocks[SENSOR_BLOCKS_MAP['get']] = {
-  init: block.getVariable({
-    variableName,
-  }),
-};
+Blockly.Blocks[SENSOR_BLOCKS_MAP['get']] = block.getVariable({
+  variableName,
+});
 
 Blockly.JavaScript[SENSOR_BLOCKS_MAP['get']] = code.getVariable({
   propertyName: 'value',

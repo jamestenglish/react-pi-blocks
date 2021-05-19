@@ -33,12 +33,10 @@ const NOTE_LENGTH_FIELD = 'PIEZO_NOTE_LENGTH_FIELD';
 const FREQUENCY_FIELD = 'PIEZO_FREQUENCY_FIELD';
 const DURATION_IN_MS_FIELD = 'PIEZO_DURATION_IN_MS';
 
-Blockly.Blocks[BLOCKS_MAP['makePin']] = {
-  init: block.makePin({
-    useText: 'used for Piezo named',
-    variableName,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['makePin']] = block.makePin({
+  useText: 'used for Piezo named',
+  variableName,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Piezo',

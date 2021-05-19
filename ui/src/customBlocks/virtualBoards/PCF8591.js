@@ -30,20 +30,16 @@ const { code: defaultCode, block: defaultBlock } = defaultCreateGenerators({
   color,
 });
 
-Blockly.Blocks[BLOCKS_MAP['set']] = {
-  init: block.setGenerator({
-    useText,
-    variableName,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['set']] = block.setGenerator({
+  useText,
+  variableName,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['set']] = code.setGenerator({
   expanderName,
 });
 
-Blockly.Blocks[BLOCKS_MAP['get']] = {
-  init: defaultBlock.getVariable({ variableName }),
-};
+Blockly.Blocks[BLOCKS_MAP['get']] = defaultBlock.getVariable({ variableName });
 
 Blockly.JavaScript[BLOCKS_MAP['get']] = defaultCode.getVariable();
 

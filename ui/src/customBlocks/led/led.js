@@ -9,10 +9,10 @@ import createGenerators from 'customBlocks/generators/createGenerators';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
 import { inputType, color, variableName, BLOCKS_MAP } from './constants';
 
-const isAdditionaParamInput = (additionalParamCommands) => (fieldValue) => {
+const isAdditionaParamInput = (additionalParamCommandsIn) => (fieldValue) => {
   // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < additionalParamCommands.length; i++) {
-    if (fieldValue === additionalParamCommands[i][1]) {
+  for (let i = 0; i < additionalParamCommandsIn.length; i++) {
+    if (fieldValue === additionalParamCommandsIn[i][1]) {
       return true;
     }
   }
@@ -24,20 +24,16 @@ const { code, block } = createGenerators({ inputType, color });
 const customOptionFieldName = 'LED_COMMAND';
 const additionInputFieldName = 'ADDITIONAL_PARAM';
 
-Blockly.Blocks[BLOCKS_MAP['makePin']] = {
-  init: block.makePin({
-    useText: 'used for LED named',
-    variableName,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['makePin']] = block.makePin({
+  useText: 'used for LED named',
+  variableName,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Led',
 });
 
-Blockly.Blocks[BLOCKS_MAP['get']] = {
-  init: block.getVariable({ variableName }),
-};
+Blockly.Blocks[BLOCKS_MAP['get']] = block.getVariable({ variableName });
 
 Blockly.JavaScript[BLOCKS_MAP['get']] = code.getVariable();
 
@@ -74,7 +70,7 @@ const customFields = [
 ];
 
 Blockly.Blocks[BLOCKS_MAP['runCommand']] = {
-  init: block.runCommand({
+  ...block.runCommand({
     dropDownArray: [...standardCommands, ...additionalParamCommands],
     validatorFunctionName: block.getValidateFuncName(customOptionFieldName),
     variableName,
@@ -83,7 +79,7 @@ Blockly.Blocks[BLOCKS_MAP['runCommand']] = {
 };
 
 const codeGenerator = (blockIn) => {
-  console.group('additionalParam codeGenerator');
+  console.group('led.additionalParam codeGenerator');
   const codeVariableName = Blockly.JavaScript.variableDB_.getName(
     blockIn.getFieldValue(inputType),
     Blockly.Variables.NAME_TYPE
@@ -102,7 +98,7 @@ const codeGenerator = (blockIn) => {
 };
 
 Blockly.JavaScript[BLOCKS_MAP['runCommand']] = function (blockIn) {
-  console.group('LED.Block.js.runCommand');
+  console.group('led.block.runCommand');
   const fieldValue = blockIn.getFieldValue(customOptionFieldName);
 
   const hasAdditionalParam = isAdditionaParamInput(additionalParamCommands)(

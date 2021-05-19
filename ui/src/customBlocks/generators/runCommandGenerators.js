@@ -19,34 +19,36 @@ const createGenerators = ({ inputType, color = 230 }) => {
     middleText = '',
     commandFieldName = DEFAULT_COMMAND_FIELD_NAME,
   }) => {
-    return function () {
-      let validatorFunc = null;
-      if (validatorFunctionName != null) {
-        const tmpValidatorFunc = this[validatorFunctionName];
-        if (tmpValidatorFunc) {
-          validatorFunc = tmpValidatorFunc;
+    return {
+      init() {
+        let validatorFunc = null;
+        if (validatorFunctionName != null) {
+          const tmpValidatorFunc = this[validatorFunctionName];
+          if (tmpValidatorFunc) {
+            validatorFunc = tmpValidatorFunc;
+          }
         }
-      }
-      this.appendDummyInput().appendField(preText);
-      this.appendDummyInput(inputType).appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      if (!isNullOrEmpty(middleText)) {
-        this.appendDummyInput().appendField(middleText);
-      }
+        this.appendDummyInput().appendField(preText);
+        this.appendDummyInput(inputType).appendField(
+          new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+          inputType
+        );
+        if (!isNullOrEmpty(middleText)) {
+          this.appendDummyInput().appendField(middleText);
+        }
 
-      this.appendDummyInput().appendField(
-        new Blockly.FieldDropdown(dropDownArray, validatorFunc),
-        commandFieldName
-      );
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(color);
-      this.setTooltip('');
-      this.setHelpUrl('');
-      additionalInit(this);
+        this.appendDummyInput().appendField(
+          new Blockly.FieldDropdown(dropDownArray, validatorFunc),
+          commandFieldName
+        );
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(color);
+        this.setTooltip('');
+        this.setHelpUrl('');
+        additionalInit(this);
+      },
     };
   };
 

@@ -6,13 +6,15 @@ import 'blockly/javascript';
 
 const createGenerators = ({ inputType, color = 230 }) => {
   const getVariableBlockGenerator = ({ variableName }) => {
-    return function () {
-      this.appendDummyInput().appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      this.setOutput(true, inputType);
-      this.setColour(color);
+    return {
+      init() {
+        this.appendDummyInput().appendField(
+          new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+          inputType
+        );
+        this.setOutput(true, inputType);
+        this.setColour(color);
+      },
     };
   };
 

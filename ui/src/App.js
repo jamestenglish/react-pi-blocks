@@ -10,6 +10,7 @@ import './customBlocks/GPIOpins/pins';
 import './customBlocks/virtualBoards/PCF8591';
 import './customBlocks/sensor/sensor';
 import './customBlocks/piezo/piezo';
+import './customBlocks/motor/motor';
 
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';

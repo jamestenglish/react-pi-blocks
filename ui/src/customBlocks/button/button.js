@@ -27,34 +27,28 @@ const middleText = 'is';
 
 const { code, block } = createGenerators({ inputType, color });
 
-Blockly.Blocks[BLOCKS_MAP['makePin']] = {
-  init: block.makePin({
-    useText: 'used for Button named',
-    variableName,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['makePin']] = block.makePin({
+  useText: 'used for Button named',
+  variableName,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['makePin']] = code.makePin({
   constructorName: 'five.Button',
 });
 
-Blockly.Blocks[BLOCKS_MAP['get']] = {
-  init: block.getVariable({
-    variableName,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['get']] = block.getVariable({
+  variableName,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['get']] = code.getVariable();
 
-Blockly.Blocks[BLOCKS_MAP['on_off']] = {
-  init: block.runCommand({
-    dropDownArray,
-    variableName,
-    additionalInit,
-    middleText,
-    preText,
-  }),
-};
+Blockly.Blocks[BLOCKS_MAP['on_off']] = block.runCommand({
+  dropDownArray,
+  variableName,
+  additionalInit,
+  middleText,
+  preText,
+});
 
 Blockly.JavaScript[BLOCKS_MAP['on_off']] = function (blockIn) {
   const buttonCommand = blockIn.getFieldValue(BUTTON_COMMAND);

@@ -7,20 +7,23 @@ import 'blockly/javascript';
 import isNullOrEmpty from 'helpers/isNullOrEmpty';
 
 const createGenerators = ({ inputType, color }) => {
-  const virtualBoardBlockSetGenerator = ({ variableName, useText }) =>
-    function () {
-      this.appendDummyInput().appendField(useText);
-      this.appendDummyInput(inputType).appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(color);
-      this.setTooltip('');
-      this.setHelpUrl('');
+  const virtualBoardBlockSetGenerator = ({ variableName, useText }) => {
+    return {
+      init: function () {
+        this.appendDummyInput().appendField(useText);
+        this.appendDummyInput(inputType).appendField(
+          new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+          inputType
+        );
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(color);
+        this.setTooltip('');
+        this.setHelpUrl('');
+      },
     };
+  };
 
   const virtualBoardCodeSetGenerator = ({ expanderName }) =>
     function (block) {
@@ -35,24 +38,27 @@ const createGenerators = ({ inputType, color }) => {
       return codeOut;
     };
 
-  const virtualBoardBlockUseGenerator = ({ variableName, pinType }) =>
-    function () {
-      this.appendDummyInput().appendField('Use');
-      this.appendDummyInput(inputType).appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      this.appendDummyInput().appendField('with ADC pin');
-      this.appendValueInput(pinType).setCheck(pinType);
-      this.appendStatementInput(`${inputType}_STMT`).setCheck(null);
+  const virtualBoardBlockUseGenerator = ({ variableName, pinType }) => {
+    return {
+      init: function () {
+        this.appendDummyInput().appendField('Use');
+        this.appendDummyInput(inputType).appendField(
+          new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+          inputType
+        );
+        this.appendDummyInput().appendField('with ADC pin');
+        this.appendValueInput(pinType).setCheck(pinType);
+        this.appendStatementInput(`${inputType}_STMT`).setCheck(null);
 
-      this.setColour(color);
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setTooltip('');
-      this.setHelpUrl('');
+        this.setColour(color);
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip('');
+        this.setHelpUrl('');
+      },
     };
+  };
 
   const virtualBoardCodeUseGenerator = ({ pinType }) =>
     function (blockIn) {

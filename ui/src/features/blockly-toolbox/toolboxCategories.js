@@ -6,6 +6,7 @@ import {
   SENSOR,
   PIEZO,
   COLORS,
+  MOTOR,
 } from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 import { SENSOR_BLOCK_TYPES } from 'customBlocks/sensor/constants';
@@ -13,6 +14,7 @@ import { PIEZO_BLOCK_TYPES } from 'customBlocks/piezo/constants';
 import { BUTTON_BLOCK_TYPES } from 'customBlocks/button/constants';
 import { PCF8591_BLOCK_TYPES } from 'customBlocks/virtualBoards/constants';
 import { LED_BLOCK_TYPES } from 'customBlocks/led/constants';
+import { MOTOR_BLOCK_TYPES } from 'customBlocks/motor/constants';
 
 const blockTypeMapper = (blockType) => {
   return { type: blockType };
@@ -27,6 +29,7 @@ const BUTTON_BLOCKS = BUTTON_BLOCK_TYPES.map(blockTypeMapper);
 const PCF8591_BLOCKS = PCF8591_BLOCK_TYPES.map(blockTypeMapper);
 
 const LED_BLOCKS = LED_BLOCK_TYPES.map(blockTypeMapper);
+const MOTOR_BLOCKS = MOTOR_BLOCK_TYPES.map(blockTypeMapper);
 
 const GPIOpinBlocks = GPIOPins.map((option) => {
   const [name] = option;
@@ -76,6 +79,11 @@ const toolboxCategories = [
     name: 'Sensor',
     colour: COLORS[SENSOR],
     blocks: [...SENSOR_BLOCKS],
+  },
+  {
+    name: 'Motor',
+    colour: COLORS[MOTOR],
+    blocks: [...MOTOR_BLOCKS],
   },
   {
     name: 'Variables',

@@ -80,7 +80,7 @@ const customFields = [
 ];
 
 Blockly.Blocks[SENSOR_BLOCKS_MAP['makePin']] = {
-  init: block.makePin({
+  ...block.makePin({
     useText: 'used for Sensor named',
     variableName,
     additionalInit,

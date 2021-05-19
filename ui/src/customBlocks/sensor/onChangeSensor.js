@@ -27,15 +27,13 @@ const dropDownArray = [
 const additionalInit = (that) =>
   that.appendStatementInput(SENSOR_ON_STATEMENT).setCheck(null);
 
-Blockly.Blocks[SENSOR_BLOCKS_MAP['on_change']] = {
-  init: block.runCommand({
-    dropDownArray,
-    variableName,
-    additionalInit,
-    preText,
-    commandFieldName,
-  }),
-};
+Blockly.Blocks[SENSOR_BLOCKS_MAP['on_change']] = block.runCommand({
+  dropDownArray,
+  variableName,
+  additionalInit,
+  preText,
+  commandFieldName,
+});
 
 Blockly.JavaScript[SENSOR_BLOCKS_MAP['on_change']] = function (blockIn) {
   const sensorEvent = blockIn.getFieldValue(SENSOR_EVENT_INPUT);

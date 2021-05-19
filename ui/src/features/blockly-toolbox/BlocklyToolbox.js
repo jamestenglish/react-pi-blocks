@@ -5,7 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ReactBlockly from 'react-blockly';
 import Blockly from 'blockly';
-import { LED, BUTTON, SENSOR, PCF8591, PIEZO } from 'constants/blockConstants';
+import {
+  LED,
+  BUTTON,
+  SENSOR,
+  PCF8591,
+  PIEZO,
+  MOTOR,
+} from 'constants/blockConstants';
 import GPIOPins, { getGPIOBlockName } from 'constants/GPIOPins';
 
 import toolboxCategories from './toolboxCategories';
@@ -114,6 +121,14 @@ const BlocklyToolbox = ({ toolboxState, handleToolboxChange }) => {
           onClick={() => createVariable(PIEZO)}
         >
           Create Piezo
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => createVariable(MOTOR)}
+        >
+          Create Motor
         </Button>
       </div>
       <ReactBlockly

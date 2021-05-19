@@ -24,21 +24,23 @@ const createGenerators = ({
     additionalInit = additionalInitDefault,
     preText = DEFAULT_PRE_TEXT,
   }) => {
-    return function () {
-      this.appendDummyInput().appendField(preText);
-      this.appendValueInput(pinFieldName).setCheck(pinTypes);
-      this.appendDummyInput().appendField(useText);
-      this.appendDummyInput(inputType).appendField(
-        new Blockly.FieldVariable(variableName, null, [inputType], inputType),
-        inputType
-      );
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(color);
-      this.setTooltip('');
-      this.setHelpUrl('');
-      additionalInit(this);
+    return {
+      init() {
+        this.appendDummyInput().appendField(preText);
+        this.appendValueInput(pinFieldName).setCheck(pinTypes);
+        this.appendDummyInput().appendField(useText);
+        this.appendDummyInput(inputType).appendField(
+          new Blockly.FieldVariable(variableName, null, [inputType], inputType),
+          inputType
+        );
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(color);
+        this.setTooltip('');
+        this.setHelpUrl('');
+        additionalInit(this);
+      },
     };
   };
 

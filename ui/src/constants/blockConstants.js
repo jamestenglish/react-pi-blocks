@@ -6,6 +6,7 @@ export const PIN_PCF8591 = 'PIN_PCF8591';
 export const SENSOR = 'SENSOR';
 export const PIEZO = 'PIEZO';
 export const PIEZO_STATEMENT = 'PIEZO_STATEMENT';
+export const MOTOR = 'MOTOR';
 
 export const PIN_WRAPPER_NAME = 'pin_wrapper';
 export const GPIO_WRAPPER_NAME = 'gpio_wrapper';
@@ -20,6 +21,7 @@ export const COLORS = {
   [SENSOR]: '#A392E9',
   [PIEZO]: '#749DC4',
   [PIEZO_STATEMENT]: '#87b5e0',
+  [MOTOR]: '#123456',
 };
 
 export const PIN_TYPES = [PIN, PIN_PCF8591];
